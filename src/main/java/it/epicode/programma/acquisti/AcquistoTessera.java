@@ -5,6 +5,8 @@ import it.epicode.Tessera;
 import it.epicode.biglietti.Abbonamento;
 import it.epicode.biglietti.TipoAbbonamento;
 import it.epicode.programma.utente.OpzioniUtente;
+import it.epicode.rivenditori.Rivenditore;
+import it.epicode.rivenditori.RivenditoreDAO;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
@@ -13,11 +15,16 @@ import java.time.LocalDate;
 import java.util.Scanner;
 
 public class AcquistoTessera {
-    static EntityManagerFactory emf = Persistence.createEntityManagerFactory("buildweek");
-    static EntityManager em = emf.createEntityManager();
+    EntityManagerFactory emf = Persistence.createEntityManagerFactory("buildweek");
+    EntityManager em = emf.createEntityManager();
 
-    public static void AcquistaTessera(Persona utente) {
-        Tessera nuovaTessera = new Tessera(utente, LocalDate.now(), true, "Roma");
+    OpzioniUtente opzioni = new OpzioniUtente();
+
+    RivenditoreDAO rivenditoreDAO = new RivenditoreDAO(em);
+    Rivenditore epicode = rivenditoreDAO.getRivenditorebyId(1L);
+
+    public void AcquistaTessera(Persona utente) {
+        Tessera nuovaTessera = new Tessera(utente, LocalDate.now(), true, epicode);
         utente.setTessera(nuovaTessera);
         em.getTransaction().begin();
         em.persist(nuovaTessera);
@@ -26,14 +33,18 @@ public class AcquistoTessera {
         System.out.println("Tessera acquistata con successo!");
     }
 
-    public static void RinnovaTessera(Tessera tessera) {
-        LocalDate oggi = LocalDate.now();
-        tessera.setDataScadenza(oggi.plusYears(1));
+    public void RinnovaTessera(Tessera tessera) {
+        em.getTransaction().begin();
+        tessera.setDataScadenza(LocalDate.now().plusYears(1));
+        tessera.setDataRinnovo(tessera.getDataScadenza().plusDays(1));
+        em.merge(tessera);
+        em.getTransaction().commit();
+
         System.out.println("Tessera rinnovata");
         System.out.println(tessera.getDataScadenza());
     }
 
-    public static void AcquistaAbbonamento(Tessera tessera) {
+    public void AcquistaAbbonamento(Tessera tessera) {
         Scanner scanner = new Scanner(System.in);
         while (true) {
             System.out.println("Che tipo di abbonamento vuoi?");
@@ -66,16 +77,16 @@ public class AcquistoTessera {
                         tessera.setAbbonamento(null);
                         em.merge(tessera);
                         em.getTransaction().commit();
-                        OpzioniUtente.OpzioniUtente(tessera.getUtente());
+                        opzioni.OpzioniUtente(tessera.getUtente());
                     }
                 } break;
                 default:
                     System.out.println("Comando non riconosciuto");
-                    OpzioniUtente.OpzioniUtente(tessera.getUtente());
+                    opzioni.OpzioniUtente(tessera.getUtente());
             }
 
             if (tessera.getAbbonamento() == null) {
-                Abbonamento nuovoAbbonamento = new Abbonamento(LocalDate.now(), null, tipo, tessera);
+                Abbonamento nuovoAbbonamento = new Abbonamento(LocalDate.now(), epicode, tipo, tessera);
                 tessera.setAbbonamento(nuovoAbbonamento);
                 em.getTransaction().begin();
                 em.persist(nuovoAbbonamento);
@@ -84,7 +95,7 @@ public class AcquistoTessera {
             } else {
                 tessera.getAbbonamento().setDurata(tipo);
             }
-            OpzioniUtente.OpzioniUtente(tessera.getUtente());
+            opzioni.OpzioniUtente(tessera.getUtente());
         }
     }
 }

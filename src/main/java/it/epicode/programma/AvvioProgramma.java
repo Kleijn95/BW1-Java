@@ -14,9 +14,11 @@ public class AvvioProgramma {
 
         String scelta = scanner.nextLine();
 
+        Utente utente = new Utente();
+
         while(true) {
             switch (scelta) {
-                case "1": Utente.Utente(); break;
+                case "1": utente.Utente(); break;
                 /*case "2": Amministratore(); break;*/
                 case "0":
                     System.out.println("Chiusura in corso...");

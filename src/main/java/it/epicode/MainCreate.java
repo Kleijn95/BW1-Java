@@ -21,20 +21,20 @@ public class MainCreate {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("buildweek");
         EntityManager em = emf.createEntityManager();
 
-        RivenditoreAutorizzato r1= new RivenditoreAutorizzato("Roma",true);
+        RivenditoreAutorizzato rivenditore= new RivenditoreAutorizzato("Epicode",true);
         DistributoreAutomatico d1= new DistributoreAutomatico("Milano", false);
-        Biglietto b = new Biglietto(LocalDate.of(2023, 1, 1), r1, null);
+        Biglietto b = new Biglietto(LocalDate.of(2023, 1, 1), rivenditore, null);
         Biglietto b1= new Biglietto(LocalDate.of(2024, 5, 7), d1, null);
         Biglietto b2= new Biglietto(LocalDate.of(2025, 1, 6), d1, null);
         Persona p1= new Persona("Germano", "Mosconi", null);
         Persona p2= new Persona("Silvio", "Berlusconi", null);
         Persona p3= new Persona("Elon", "Musk", null);
-        Tessera t1= new Tessera(p1,LocalDate.of(2024,10,10),true,"Roma");
-        Tessera t2= new Tessera(p2,LocalDate.of(2025,3,1),false,"Milano");
-        Abbonamento a1= new Abbonamento(LocalDate.of(2024, 1, 1), r1, TipoAbbonamento.MENSILE, t1);
-        Abbonamento a2= new Abbonamento(LocalDate.of(2025, 6, 6), r1, TipoAbbonamento.SETTIMANALE, t2);
+        Tessera t1= new Tessera(p1,LocalDate.of(2024,10,10),true,rivenditore);
+        Tessera t2= new Tessera(p2,LocalDate.of(2025,3,1),false,d1);
+        Abbonamento a1= new Abbonamento(LocalDate.of(2024, 1, 1), rivenditore, TipoAbbonamento.MENSILE, t1);
+        Abbonamento a2= new Abbonamento(LocalDate.of(2025, 6, 6), rivenditore, TipoAbbonamento.SETTIMANALE, t2);
         p1.setTessera(t1);
-        em.persist(r1);
+        em.persist(rivenditore);
         em.persist(d1);
         em.persist(b);
         em.persist(b1);

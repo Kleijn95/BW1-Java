@@ -1,8 +1,7 @@
 package it.epicode.biglietti;
 
-import it.epicode.Persona;
 import it.epicode.Tessera;
-import it.epicode.rivenditori.RivenditoreAstratto;
+import it.epicode.rivenditori.Rivenditore;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -13,14 +12,14 @@ import java.time.LocalDate;
 @Data
 @NoArgsConstructor
 @Table(name = "abbonamenti")
-public class Abbonamento extends PadreTicket{
+public class Abbonamento extends Ticket {
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private TipoAbbonamento durata;
     @OneToOne
     private Tessera tessera;
 
-    public Abbonamento(LocalDate dataEmissione, RivenditoreAstratto emittente, TipoAbbonamento durata, Tessera tessera) {
+    public Abbonamento(LocalDate dataEmissione, Rivenditore emittente, TipoAbbonamento durata, Tessera tessera) {
         super(dataEmissione, emittente);
         this.durata = durata;
         this.tessera = tessera;

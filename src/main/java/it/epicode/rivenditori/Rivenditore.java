@@ -12,8 +12,10 @@ import java.util.List;
 @Entity
 @Data
 @NoArgsConstructor
-@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
-public abstract class RivenditoreAstratto {
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name = "tipo_rivenditore")
+@Table(name = "rivenditori")
+public abstract class Rivenditore {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
@@ -24,9 +26,12 @@ public abstract class RivenditoreAstratto {
     @OneToMany(mappedBy = "emittente")
     List<Abbonamento> abbonamentiEmessi = new ArrayList<>();
 
+    public boolean aperto;
 
-    public RivenditoreAstratto( String location ) {
+
+    public Rivenditore(String location, boolean aperto ) {
         this.location = location;
+        this.aperto = true;
 
     }
 }

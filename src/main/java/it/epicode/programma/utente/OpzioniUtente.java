@@ -3,20 +3,16 @@ package it.epicode.programma.utente;
 import it.epicode.Persona;
 import it.epicode.Tessera;
 import it.epicode.programma.AvvioProgramma;
+import it.epicode.programma.acquisti.AcquistaBiglietto;
 import it.epicode.programma.acquisti.AcquistoTessera;
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.EntityManagerFactory;
-import jakarta.persistence.Persistence;
-import org.postgresql.util.OSUtil;
 
 import java.util.Scanner;
 
-import static it.epicode.programma.acquisti.AcquistaBiglietto.AcquistaBiglietto;
-import static it.epicode.programma.acquisti.AcquistoTessera.RinnovaTessera;
-
 public class OpzioniUtente {
-    public static void OpzioniUtente(Persona utente) {
+    public void OpzioniUtente(Persona utente) {
         Scanner scanner = new Scanner(System.in);
+
+        AcquistoTessera acquistoTessera = new AcquistoTessera();
 
         while (true) {
             System.out.println("Seleziona Operazione: ");
@@ -50,19 +46,20 @@ public class OpzioniUtente {
                     }
                     break;
                 case "2":
-                    AcquistaBiglietto();
+                    AcquistaBiglietto acquisto = new AcquistaBiglietto();
+                    acquisto.AcquistaBiglietto();
                     OpzioniUtente(utente);
                     break;
                 case "3":
                     if (utente.getTessera() != null) {
                         Tessera tessera = utente.getTessera();
-                        RinnovaTessera(tessera);
+                        acquistoTessera.RinnovaTessera(tessera);
                     } else {
-                        AcquistoTessera.AcquistaTessera(utente);
+                        acquistoTessera.AcquistaTessera(utente);
                     }
                     break;
                 case "4": if(utente.getTessera() != null) {
-                            AcquistoTessera.AcquistaAbbonamento(utente.getTessera());
+                            acquistoTessera.AcquistaAbbonamento(utente.getTessera());
                             break;
                         } else {
                             System.out.println("Comando non riconosciuto");

@@ -9,11 +9,13 @@ import jakarta.persistence.Persistence;
 import java.util.Scanner;
 
 public class Utente {
-    public static void Utente() {
+    public void Utente() {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("buildweek");
         EntityManager em = emf.createEntityManager();
         Scanner scanner = new Scanner(System.in);
         PersonaDAO personaDAO = new PersonaDAO(em);
+
+        OpzioniUtente opzioni = new OpzioniUtente();
 
         System.out.println("Digita il tuo Id: ");
         long id = scanner.nextLong();
@@ -34,6 +36,6 @@ public class Utente {
             em.getTransaction().commit();
             System.out.println("Utente creato.");
         }
-        OpzioniUtente.OpzioniUtente(utente);
+        opzioni.OpzioniUtente(utente);
     }
 }

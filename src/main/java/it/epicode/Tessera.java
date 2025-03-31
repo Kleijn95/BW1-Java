@@ -1,6 +1,7 @@
 package it.epicode;
 
 import it.epicode.biglietti.Abbonamento;
+import it.epicode.rivenditori.Rivenditore;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -27,17 +28,18 @@ public class Tessera {
     private LocalDate dataRinnovo;
     @Column(nullable = false)
     private boolean rinnovoAutomatico;
-    @Column(nullable = false)
-    private String localitaEmissione;
+    @ManyToOne
+    @JoinColumn(nullable = false)
+    private Rivenditore emittente;
     @OneToOne
     private Abbonamento abbonamento;
 
-    public Tessera(Persona utente, LocalDate dataEmissione, boolean rinnovoAutomatico, String localitaEmissione) {
+    public Tessera(Persona utente, LocalDate dataEmissione, boolean rinnovoAutomatico, Rivenditore emittente) {
         this.utente = utente;
         this.dataEmissione = dataEmissione;
         this.dataScadenza = dataEmissione.plusYears(1);
         this.dataRinnovo = dataScadenza.plusDays(1);
         this.rinnovoAutomatico = rinnovoAutomatico;
-        this.localitaEmissione = localitaEmissione;
+        this.emittente = emittente;
     }
 }
