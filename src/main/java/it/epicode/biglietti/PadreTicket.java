@@ -21,7 +21,7 @@ public abstract class PadreTicket {
     private Long id;
     @Column(nullable = false)
     private LocalDate dataEmissione;
-    @JoinColumn(nullable = false)
+    /*@JoinColumn(nullable = false)*/
     @ManyToOne
     private RivenditoreAstratto emittente;
 

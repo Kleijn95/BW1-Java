@@ -21,7 +21,7 @@ public class Main {
     public static void main(String[] args) {
 
         /*NASCONDE TUTTI GLI ERRORI MA ANCHE I LOG DI HIBERNATE*/
-        System.setErr(new PrintStream(OutputStream.nullOutputStream()));
+        /*System.setErr(new PrintStream(OutputStream.nullOutputStream()));*/
 
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("buildweek");
         EntityManager em = emf.createEntityManager();
