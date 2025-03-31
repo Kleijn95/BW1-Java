@@ -8,16 +8,16 @@ import jakarta.persistence.Persistence;
 import java.time.LocalDate;
 import java.util.Scanner;
 
-//public class AcquistaBiglietto {
-//    Scanner scanner = new Scanner (System.in);
-//    static EntityManagerFactory emf = Persistence.createEntityManagerFactory("buildweek");
-//    static EntityManager em = emf.createEntityManager();
-//
-//    public static void AcquistaBiglietto() {
-//        Biglietto nuovoBiglietto = new Biglietto(LocalDate.now(), null, false);
-//        em.getTransaction().begin();
-//        em.persist(nuovoBiglietto);
-//        em.getTransaction().commit();
-//        System.out.println("Biglietto Acquistato");
-//    }
-//}
+public class AcquistaBiglietto {
+    Scanner scanner = new Scanner (System.in);
+    static EntityManagerFactory emf = Persistence.createEntityManagerFactory("buildweek");
+    static EntityManager em = emf.createEntityManager();
+
+    public static void AcquistaBiglietto() {
+        Biglietto nuovoBiglietto = new Biglietto(LocalDate.now(), null, null);
+        em.getTransaction().begin();
+        em.persist(nuovoBiglietto);
+        em.getTransaction().commit();
+        System.out.println("Biglietto Acquistato");
+    }
+}
