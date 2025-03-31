@@ -14,7 +14,7 @@ public class AcquistaBiglietto {
     static EntityManager em = emf.createEntityManager();
 
     public static void AcquistaBiglietto() {
-        Biglietto nuovoBiglietto = new Biglietto(LocalDate.now(), null, false);
+        Biglietto nuovoBiglietto = new Biglietto(LocalDate.now(), null, null);
         em.getTransaction().begin();
         em.persist(nuovoBiglietto);
         em.getTransaction().commit();
