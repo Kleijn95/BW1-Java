@@ -1,20 +1,20 @@
 package it.epicode.biglietti;
 
 
-import it.epicode.rivenditori.RivenditoreAstrattoDAO;
+import it.epicode.rivenditori.RivenditoreDAO;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
 
 import java.time.LocalDate;
 
-public class PadreTicketDAO {
+public class TicketDAO {
     private EntityManager em;
-    private RivenditoreAstrattoDAO rivenditoreAstrattoDAO;
+    private RivenditoreDAO rivenditoreDAO;
 
-    public PadreTicketDAO(EntityManager em) {
+    public TicketDAO(EntityManager em) {
         this.em = em;
-        this.rivenditoreAstrattoDAO = new RivenditoreAstrattoDAO(em);
+        this.rivenditoreDAO = new RivenditoreDAO(em);
     }
 
     EntityManagerFactory emf = Persistence.createEntityManagerFactory("buildweek");
@@ -23,7 +23,7 @@ public class PadreTicketDAO {
         return em.createNamedQuery("Abbonamenti.findyCountByDataAndEmittente", Long.class)
                 .setParameter("startDate", startDate)
                 .setParameter("endDate", endDate)
-                .setParameter("emittente", rivenditoreAstrattoDAO.getRivenditorebyId(emittenteId))
+                .setParameter("emittente", rivenditoreDAO.getRivenditorebyId(emittenteId))
                 .getSingleResult();
 
     }
@@ -32,7 +32,7 @@ public class PadreTicketDAO {
         return em.createNamedQuery("Biglietti.findyCountByDataAndEmittente", Long.class)
                 .setParameter("startDate", startDate)
                 .setParameter("endDate", endDate)
-                .setParameter("emittente", rivenditoreAstrattoDAO.getRivenditorebyId(emittenteId))
+                .setParameter("emittente", rivenditoreDAO.getRivenditorebyId(emittenteId))
                 .getSingleResult();
 
     }
