@@ -1,9 +1,8 @@
 package it.epicode.biglietti;
 
+import it.epicode.mezzi.Mezzo;
 import it.epicode.rivenditori.RivenditoreAstratto;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -17,11 +16,23 @@ import java.time.LocalDate;
 public class Biglietto extends PadreTicket {
     @Column(nullable = false)
     private boolean vidimato = false;
+    @ManyToOne
+    @JoinColumn(name = "mezzo_id")
+    private Mezzo mezzo;
 
-    public Biglietto(LocalDate dataEmissione, RivenditoreAstratto emittente, boolean vidimato) {
+    public Biglietto(LocalDate dataEmissione, RivenditoreAstratto emittente, Mezzo mezzo) {
         super(dataEmissione, emittente);
-        this.vidimato = vidimato;
+        this.mezzo = mezzo;
+        this.vidimato = (mezzo != null);  // Se ha un mezzo, è vidimato
+    }
+
+    public void vidima(Mezzo mezzo) {
+        this.mezzo = mezzo;
+        this.vidimato = true;  // Segna il biglietto come vidimato
     }
 
 
-}
+    }
+
+
+
