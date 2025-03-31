@@ -7,10 +7,10 @@ import java.util.Scanner;
 public class AvvioProgramma {
     static Scanner scanner = new Scanner(System.in);
     public static void AvvioProgramma() {
-        System.out.print("Entra come Utente o come Amministratore:");
-        System.out.print("1. Utente");
-        System.out.print("2. Amministratore");
-        System.out.print("0. Termina il programma");
+        System.out.println("Entra come Utente o come Amministratore:");
+        System.out.println("1. Utente");
+        System.out.println("2. Amministratore");
+        System.out.println("0. Termina il programma");
 
         String scelta = scanner.nextLine();
 

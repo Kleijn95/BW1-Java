@@ -1,7 +1,5 @@
 package it.epicode;
 
-
-import it.epicode.biglietti.Abbonamento;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -19,9 +17,9 @@ public class Persona {
     @Column(nullable = false)
     private String cognome;
     @OneToOne
+    @JoinColumn(name = "tessera_id")
     private Tessera tessera;
-    @OneToOne
-    private Abbonamento abbonamento;
+
 
 
     public Persona( String nome, String cognome, Tessera tessera) {

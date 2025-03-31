@@ -1,5 +1,6 @@
 package it.epicode;
 
+import it.epicode.biglietti.Abbonamento;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -16,6 +17,7 @@ public class Tessera {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
     @OneToOne
+    @JoinColumn(name = "utente_id", nullable = false)
     private Persona utente;
     @Column(nullable = false)
     private LocalDate dataEmissione;
@@ -27,6 +29,8 @@ public class Tessera {
     private boolean rinnovoAutomatico;
     @Column(nullable = false)
     private String localitaEmissione;
+    @OneToOne
+    private Abbonamento abbonamento;
 
     public Tessera(Persona utente, LocalDate dataEmissione, boolean rinnovoAutomatico, String localitaEmissione) {
         this.utente = utente;

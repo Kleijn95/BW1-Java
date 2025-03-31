@@ -16,7 +16,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainTest {
+public class MainCreate {
     public static void main(String[] args) {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("buildweek");
         EntityManager em = emf.createEntityManager();
@@ -29,11 +29,10 @@ public class MainTest {
         Persona p1= new Persona("Germano", "Mosconi", null);
         Persona p2= new Persona("Silvio", "Berlusconi", null);
         Persona p3= new Persona("Elon", "Musk", null);
-        Abbonamento a1= new Abbonamento(LocalDate.of(2024, 1, 1), r1, TipoAbbonamento.MENSILE, p1);
-        Abbonamento a2= new Abbonamento(LocalDate.of(2025, 6, 6), r1, TipoAbbonamento.SETTIMANALE, p2);
-        Abbonamento a3= new Abbonamento(LocalDate.of(2023, 7, 17), d1, TipoAbbonamento.MENSILE, p3);
         Tessera t1= new Tessera(p1,LocalDate.of(2024,10,10),true,"Roma");
         Tessera t2= new Tessera(p2,LocalDate.of(2025,3,1),false,"Milano");
+        Abbonamento a1= new Abbonamento(LocalDate.of(2024, 1, 1), r1, TipoAbbonamento.MENSILE, t1);
+        Abbonamento a2= new Abbonamento(LocalDate.of(2025, 6, 6), r1, TipoAbbonamento.SETTIMANALE, t2);
         p1.setTessera(t1);
         em.persist(r1);
         em.persist(d1);
@@ -43,6 +42,7 @@ public class MainTest {
         em.persist(p1);
         em.persist(a1);
         em.persist(t1);
+        t1.setAbbonamento(a1);
 
         RivenditoreAutorizzato rivenditoreAutorizzato = new RivenditoreAutorizzato("Roma", true);
         em.persist(rivenditoreAutorizzato);
@@ -65,6 +65,5 @@ public class MainTest {
 
         em.getTransaction().commit();
     }
-
-    }
+}
 

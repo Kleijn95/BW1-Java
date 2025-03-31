@@ -1,8 +1,6 @@
 package it.epicode.rivenditori;
 
 
-import it.epicode.biglietti.Abbonamento;
-import it.epicode.biglietti.Biglietto;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;

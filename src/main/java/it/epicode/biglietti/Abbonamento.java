@@ -1,6 +1,7 @@
 package it.epicode.biglietti;
 
 import it.epicode.Persona;
+import it.epicode.Tessera;
 import it.epicode.rivenditori.RivenditoreAstratto;
 import jakarta.persistence.*;
 import lombok.Data;
@@ -16,14 +17,13 @@ public class Abbonamento extends PadreTicket{
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private TipoAbbonamento durata;
-    @JoinColumn(nullable = false)
     @OneToOne
-    private Persona persona;
+    private Tessera tessera;
 
-    public Abbonamento(LocalDate dataEmissione, RivenditoreAstratto emittente, TipoAbbonamento durata, Persona persona) {
+    public Abbonamento(LocalDate dataEmissione, RivenditoreAstratto emittente, TipoAbbonamento durata, Tessera tessera) {
         super(dataEmissione, emittente);
         this.durata = durata;
-        this.persona = persona;
+        this.tessera = tessera;
     }
 }
 
