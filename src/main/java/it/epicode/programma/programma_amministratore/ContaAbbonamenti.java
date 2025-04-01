@@ -1,4 +1,4 @@
-package it.epicode.programma.amministratore;
+package it.epicode.programma.programma_amministratore;
 
 import it.epicode.biglietti.TicketDAO;
 import it.epicode.rivenditori.RivenditoreDAO;
@@ -15,10 +15,9 @@ public class ContaAbbonamenti {
 
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("buildweek");
         EntityManager em = emf.createEntityManager();
-
-
         TicketDAO ticketDAO = new TicketDAO(em);
         RivenditoreDAO rivenditoreDAO = new RivenditoreDAO(em);
+
 
         System.out.println("Seleziona l'intervallo di date");
         System.out.println("Data di partenza (formato yyyy-MM-dd):");
@@ -30,13 +29,13 @@ public class ContaAbbonamenti {
         String inputEndDate = scanner.nextLine();
         LocalDate endDate = LocalDate.parse(inputEndDate);
 
-        System.out.println("Seleziona l'Id dell'emittente:");
+        System.out.println("Seleziona l'ID dell'emittente:");
         long id = scanner.nextLong();
 
         System.out.println("Data partenza: " + inputStartDate);
         System.out.println("Data fine: " + inputEndDate);
         System.out.println("Emittente: " + rivenditoreDAO.getRivenditorebyId(id).getLocation());
 
-        System.out.println("Numero di abbonamenti: " + ticketDAO.getNumAbb(startDate, endDate, id));
+        System.out.println("Numero di abbonamenti: " + ticketDAO.getNumeroAbbonamenti(startDate, endDate, id));
     }
 }

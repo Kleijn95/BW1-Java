@@ -1,28 +1,30 @@
-package it.epicode.programma.utente;
+package it.epicode.programma.programma_utente;
 
-import it.epicode.Persona;
-import it.epicode.PersonaDAO;
+import it.epicode.utente.Utente;
+import it.epicode.utente.UtenteDAO;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
 
 import java.util.Scanner;
 
-public class Utente {
-    public void Utente() {
+public class UtenteProgramma {
+    public void UtenteProgramma() {
+        Scanner scanner = new Scanner(System.in);
+
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("buildweek");
         EntityManager em = emf.createEntityManager();
-        Scanner scanner = new Scanner(System.in);
-        PersonaDAO personaDAO = new PersonaDAO(em);
+        UtenteDAO utenteDAO = new UtenteDAO(em);
 
         OpzioniUtente opzioni = new OpzioniUtente();
 
-        System.out.println("Digita il tuo Id: ");
+        System.out.println("Digita il tuo ID Utente:");
         long id = scanner.nextLong();
         scanner.nextLine();
-        Persona utente = personaDAO.getPersonabyId(id);
+
+        Utente utente = utenteDAO.getUtenteById(id);
         if (utente != null) {
-            System.out.println("Nome: " + utente.getNome() + ", Cognome: " + utente.getCognome());
+            System.out.println("Bentornato " + utente.getNome() + utente.getCognome());
         } else {
             System.out.println("Utente non trovato.");
             System.out.println("Creazione utente.");
@@ -30,11 +32,10 @@ public class Utente {
             String nome = scanner.nextLine();
             System.out.println("Cognome: ");
             String cognome = scanner.nextLine();
-            utente = new Persona(nome, cognome, null);
-            em.getTransaction().begin();
-            em.persist(utente);
-            em.getTransaction().commit();
-            System.out.println("Utente creato.");
+            utente = new Utente(nome, cognome, null);
+            utenteDAO.saveUtente(utente);
+            System.out.println("Utente creato con successo.");
+            System.out.println("Benvenuto " + utente.getNome() + " " + utente.getCognome());
         }
         opzioni.OpzioniUtente(utente);
     }

@@ -1,4 +1,4 @@
-package it.epicode;
+package it.epicode.utente;
 
 import jakarta.persistence.*;
 import lombok.Data;
@@ -14,7 +14,7 @@ import lombok.NoArgsConstructor;
 @Data
 @Table(name = "persone")
 @NoArgsConstructor
-public class Persona {
+public class Utente {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
@@ -28,11 +28,7 @@ public class Persona {
     @Column(nullable = false)
     private boolean accessoAmministratore;
 
-    public boolean getAccessoAmministratore() {
-        return accessoAmministratore;
-    }
-
-    public Persona( String nome, String cognome, Tessera tessera) {
+    public Utente(String nome, String cognome, Tessera tessera) {
         this.nome = nome;
         this.cognome = cognome;
         this.tessera = tessera;

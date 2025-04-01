@@ -8,8 +8,9 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @Entity
-@NamedQuery(name="mezzo.numeroTratteUguali", query= "SELECT count(t) from Tratta t where t.partenza = :partenza and t.capolinea = :capolinea and t.mezzo = :mezzo")
-@NamedQuery(name="mezzo.tempoMedioTratta", query = "SELECT AVG(t.tempoPercorrenza) from Tratta t where t.partenza = :partenza and t.capolinea = :capolinea and t.mezzo = :mezzo")
+@NamedQuery(name="Tratta.getNumeroTratteUguali", query= "SELECT count(t) from Tratta t where t.partenza = :partenza and t.capolinea = :capolinea and t.mezzo = :mezzo")
+@NamedQuery(name="Tratta.getTempoMedioTratta", query = "SELECT AVG(t.tempoPercorrenza) from Tratta t where t.partenza = :partenza and t.capolinea = :capolinea and t.mezzo = :mezzo")
+@NamedQuery(name = "Tratta.getAll", query = "SELECT mezzo FROM Mezzo mezzo")
 public class Tratta {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)

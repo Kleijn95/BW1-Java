@@ -1,7 +1,7 @@
 package it.epicode.biglietti;
 
-import it.epicode.Tessera;
 import it.epicode.rivenditori.Rivenditore;
+import it.epicode.utente.Tessera;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;

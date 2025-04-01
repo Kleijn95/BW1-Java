@@ -29,15 +29,14 @@ public abstract class Rivenditore {
     private String location;
     @OneToMany(mappedBy = "emittente")
     List<Biglietto> bigliettiEmessi = new ArrayList<>();
+
     @OneToMany(mappedBy = "emittente")
     List<Abbonamento> abbonamentiEmessi = new ArrayList<>();
 
     public boolean aperto;
 
-
-    public Rivenditore(String location, boolean aperto ) {
+    public Rivenditore(String location ) {
         this.location = location;
         this.aperto = true;
-
     }
 }

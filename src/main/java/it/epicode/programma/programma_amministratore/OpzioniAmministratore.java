@@ -1,13 +1,13 @@
-package it.epicode.programma.amministratore;
+package it.epicode.programma.programma_amministratore;
 
-import it.epicode.Persona;
+import it.epicode.utente.Utente;
 import it.epicode.programma.AvvioProgramma;
-import it.epicode.programma.amministratore.gestionemezzi.GestioneParcoMezzi;
+import it.epicode.programma.programma_amministratore.programma_gestione_mezzi.GestioneParcoMezzi;
 
 import java.util.Scanner;
 
 public class OpzioniAmministratore {
-    public void OpzioniAmministratore(Persona amministratore) {
+    public void OpzioniAmministratore(Utente amministratore) {
         Scanner scanner = new Scanner(System.in);
         ContaBiglietti contaBiglietti = new ContaBiglietti();
         ContaAbbonamenti contaAbbonamenti = new ContaAbbonamenti();

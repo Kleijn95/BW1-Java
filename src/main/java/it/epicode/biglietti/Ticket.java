@@ -13,8 +13,8 @@ import java.time.LocalDate;
 @Data
 @NoArgsConstructor
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
-@NamedQuery(name="Biglietti.findyCountByDataAndEmittente", query = "SELECT COUNT(b) FROM Biglietto b WHERE b.dataEmissione between :startDate AND :endDate AND b.emittente = :emittente")
-@NamedQuery(name="Abbonamenti.findyCountByDataAndEmittente", query = "SELECT COUNT(a) FROM Abbonamento a WHERE a.dataEmissione between :startDate AND :endDate AND a.emittente = :emittente")
+@NamedQuery(name="Biglietto.getCountByDataAndEmittente", query = "SELECT COUNT(b) FROM Biglietto b WHERE b.dataEmissione between :startDate AND :endDate AND b.emittente = :emittente")
+@NamedQuery(name="Abbonamento.getCountByDataAndEmittente", query = "SELECT COUNT(a) FROM Abbonamento a WHERE a.dataEmissione between :startDate AND :endDate AND a.emittente = :emittente")
 
 public abstract class Ticket {
     @Id
@@ -22,7 +22,6 @@ public abstract class Ticket {
     private Long id;
     @Column(nullable = false)
     private LocalDate dataEmissione;
-    /*@JoinColumn(nullable = false)*/
     @ManyToOne
     @JoinColumn(name = "emittente_id", nullable = false)
     private Rivenditore emittente;

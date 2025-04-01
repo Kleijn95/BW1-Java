@@ -2,11 +2,8 @@ package it.epicode.biglietti;
 
 
 import it.epicode.mezzi.Mezzo;
-import it.epicode.rivenditori.Rivenditore;
 import it.epicode.rivenditori.RivenditoreDAO;
 import jakarta.persistence.EntityManager;
-import jakarta.persistence.EntityManagerFactory;
-import jakarta.persistence.Persistence;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -20,20 +17,31 @@ public class TicketDAO {
         this.rivenditoreDAO = new RivenditoreDAO(em);
     }
 
-    EntityManagerFactory emf = Persistence.createEntityManagerFactory("buildweek");
+    public void saveTicket(Ticket ticket) {
+        em.getTransaction().begin();
+        em.persist(ticket);
+        em.getTransaction().commit();
+    }
 
-    public Ticket getTicketbyId(Long id) {
+    public void updateTicket(Ticket ticket) {
+        em.getTransaction().begin();
+        em.merge(ticket);
+        em.getTransaction().commit();
+    }
+
+    public Ticket getTicketById(Long id) {
         return em.find(Ticket.class, id);
     }
 
     public Long getTicketbyMezzo(Mezzo mezzo) {
-        return em.createNamedQuery("Biglietto.findByMezzo", Long.class)
+        return em.createNamedQuery("Biglietto.getCountByMezzo", Long.class)
                 .setParameter("mezzo", mezzo)
                 .getSingleResult();
     }
 
-    public Long getNumAbb(LocalDate startDate, LocalDate endDate, Long emittenteId){
-        return em.createNamedQuery("Abbonamenti.findyCountByDataAndEmittente", Long.class)
+
+    public Long getNumeroAbbonamenti(LocalDate startDate, LocalDate endDate, Long emittenteId){
+        return em.createNamedQuery("Abbonamento.getCountByDataAndEmittente", Long.class)
                 .setParameter("startDate", startDate)
                 .setParameter("endDate", endDate)
                 .setParameter("emittente", rivenditoreDAO.getRivenditorebyId(emittenteId))
@@ -41,8 +49,8 @@ public class TicketDAO {
 
     }
 
-    public Long getNumBiglietti(LocalDate startDate, LocalDate endDate, Long emittenteId){
-        return em.createNamedQuery("Biglietti.findyCountByDataAndEmittente", Long.class)
+    public Long getNumeroBiglietti(LocalDate startDate, LocalDate endDate, Long emittenteId){
+        return em.createNamedQuery("Biglietto.getCountByDataAndEmittente", Long.class)
                 .setParameter("startDate", startDate)
                 .setParameter("endDate", endDate)
                 .setParameter("emittente", rivenditoreDAO.getRivenditorebyId(emittenteId))
@@ -50,8 +58,8 @@ public class TicketDAO {
 
     }
 
-    public Long getNumBigliettiVidimatiIntervalloTempo(LocalDate startDate, LocalDate endDate){
-        return em.createNamedQuery("Biglietto.findyByVidimatoInPeriodo", Long.class)
+    public Long getNumBigliettiVidimatiPerTempo(LocalDate startDate, LocalDate endDate){
+        return em.createNamedQuery("Biglietto.getCountByVidimatoInPeriodo", Long.class)
                 .setParameter("dataInizio", startDate)
                 .setParameter("dataFine", endDate)
                 .getSingleResult();
@@ -59,7 +67,7 @@ public class TicketDAO {
     }
 
     public List<Biglietto> getBigliettiDaVidimare() {
-        return em.createNamedQuery("Biglietto.findNonVidimati", Biglietto.class)
+        return em.createNamedQuery("Biglietto.getNonVidimati", Biglietto.class)
                 .getResultList();
     }
 }

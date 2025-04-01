@@ -1,19 +1,21 @@
-package it.epicode.programma.utente;
+package it.epicode.programma.programma_utente;
 
-import it.epicode.Persona;
-import it.epicode.Tessera;
+import it.epicode.programma.programma_utente.programma_acquisti.VidimaBiglietto;
+import it.epicode.utente.Utente;
+import it.epicode.utente.Tessera;
 import it.epicode.programma.AvvioProgramma;
-import it.epicode.programma.acquisti.AcquistaBiglietto;
-import it.epicode.programma.acquisti.AcquistoTessera;
+import it.epicode.programma.programma_utente.programma_acquisti.AcquistaBiglietto;
+import it.epicode.programma.programma_utente.programma_acquisti.AcquistoTessera;
 
 import java.util.Scanner;
 
 public class OpzioniUtente {
-    public void OpzioniUtente(Persona utente) {
+    public void OpzioniUtente(Utente utente) {
         Scanner scanner = new Scanner(System.in);
 
         AcquistoTessera acquistoTessera = new AcquistoTessera();
         VidimaBiglietto vidimaBiglietto = new VidimaBiglietto();
+        AcquistaBiglietto acquistaBiglietto = new AcquistaBiglietto();
 
         while (true) {
             System.out.println("Seleziona Operazione: ");
@@ -49,9 +51,7 @@ public class OpzioniUtente {
                     }
                     break;
                 case "2":
-                    AcquistaBiglietto acquisto = new AcquistaBiglietto();
-                    acquisto.AcquistaBiglietto();
-                    OpzioniUtente(utente);
+                    acquistaBiglietto.AcquistaBiglietto();
                     break;
                 case "3":
                     if (utente.getTessera() != null) {
@@ -70,12 +70,10 @@ public class OpzioniUtente {
                         }
                 case "5": if(utente.getTessera() != null) {
                             vidimaBiglietto.VidimaBiglietto();
-                            break;
                         } else {
                             System.out.println("Comando non riconosciuto");
-                            OpzioniUtente(utente);
-                            break;
                         }
+                        break;
                 case "n":
                     AvvioProgramma.AvvioProgramma();
                     break;

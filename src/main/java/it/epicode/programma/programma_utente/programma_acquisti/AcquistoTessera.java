@@ -1,12 +1,14 @@
-package it.epicode.programma.acquisti;
+package it.epicode.programma.programma_utente.programma_acquisti;
 
-import it.epicode.Persona;
-import it.epicode.Tessera;
+import it.epicode.biglietti.TicketDAO;
+import it.epicode.utente.Utente;
+import it.epicode.utente.Tessera;
 import it.epicode.biglietti.Abbonamento;
 import it.epicode.biglietti.TipoAbbonamento;
-import it.epicode.programma.utente.OpzioniUtente;
+import it.epicode.programma.programma_utente.OpzioniUtente;
 import it.epicode.rivenditori.Rivenditore;
 import it.epicode.rivenditori.RivenditoreDAO;
+import it.epicode.utente.UtenteDAO;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
@@ -17,28 +19,28 @@ import java.util.Scanner;
 public class AcquistoTessera {
     EntityManagerFactory emf = Persistence.createEntityManagerFactory("buildweek");
     EntityManager em = emf.createEntityManager();
+    RivenditoreDAO rivenditoreDAO = new RivenditoreDAO(em);
+    UtenteDAO utenteDAO = new UtenteDAO(em);
+    TicketDAO ticketDAO = new TicketDAO(em);
+
+    Rivenditore epicode = rivenditoreDAO.getRivenditorebyId(1L);
 
     OpzioniUtente opzioni = new OpzioniUtente();
 
-    RivenditoreDAO rivenditoreDAO = new RivenditoreDAO(em);
-    Rivenditore epicode = rivenditoreDAO.getRivenditorebyId(1L);
-
-    public void AcquistaTessera(Persona utente) {
+    public void AcquistaTessera(Utente utente) {
         Tessera nuovaTessera = new Tessera(utente, LocalDate.now(), true, epicode);
         utente.setTessera(nuovaTessera);
-        em.getTransaction().begin();
-        em.persist(nuovaTessera);
-        em.merge(utente);
-        em.getTransaction().commit();
+
+        utenteDAO.saveTessera(nuovaTessera);
+        utenteDAO.updateUtente(utente);
+
         System.out.println("Tessera acquistata con successo!");
     }
 
     public void RinnovaTessera(Tessera tessera) {
-        em.getTransaction().begin();
         tessera.setDataScadenza(LocalDate.now().plusYears(1));
         tessera.setDataRinnovo(tessera.getDataScadenza().plusDays(1));
-        em.merge(tessera);
-        em.getTransaction().commit();
+        utenteDAO.updateTessera(tessera);
 
         System.out.println("Tessera rinnovata");
         System.out.println(tessera.getDataScadenza());
@@ -61,42 +63,44 @@ public class AcquistoTessera {
 
             TipoAbbonamento tipo = null;
             switch (scelta) {
-                case "1": tipo = TipoAbbonamento.SETTIMANALE;break;
-                case "2": tipo = TipoAbbonamento.MENSILE; break;
+                case "1": tipo = TipoAbbonamento.SETTIMANALE;
+                    AcquistaAbbonamento(tessera, tipo);
+                break;
+                case "2": tipo = TipoAbbonamento.MENSILE;
+                    AcquistaAbbonamento(tessera, tipo);
+                break;
                 case "3": {
                     if (tessera.getAbbonamento() != null) {
-                        em.getTransaction().begin();
-                        Abbonamento abbonamentoDaRimuovere = tessera.getAbbonamento();
-                        Abbonamento abbonamento;
-                        if (em.contains(abbonamentoDaRimuovere)) {
-                           abbonamento = abbonamentoDaRimuovere;
-                        } else {
-                           abbonamento = em.merge(abbonamentoDaRimuovere);
-                        }
-                        em.remove(abbonamento);
+                        Abbonamento abbonamento = tessera.getAbbonamento();
+                        ticketDAO.updateTicket(abbonamento);
+
+                        em.remove(em.merge(abbonamento));
+
                         tessera.setAbbonamento(null);
-                        em.merge(tessera);
-                        em.getTransaction().commit();
-                        opzioni.OpzioniUtente(tessera.getUtente());
+                        utenteDAO.updateTessera(tessera);
                     }
                 } break;
                 default:
                     System.out.println("Comando non riconosciuto");
-                    opzioni.OpzioniUtente(tessera.getUtente());
-            }
-
-            if (tessera.getAbbonamento() == null) {
-                Abbonamento nuovoAbbonamento = new Abbonamento(LocalDate.now(), epicode, tipo, tessera);
-                tessera.setAbbonamento(nuovoAbbonamento);
-                em.getTransaction().begin();
-                em.persist(nuovoAbbonamento);
-                em.merge(tessera);
-                em.getTransaction().commit();
-            } else {
-                tessera.getAbbonamento().setDurata(tipo);
             }
             opzioni.OpzioniUtente(tessera.getUtente());
         }
+    }
+
+    public void AcquistaAbbonamento(Tessera tessera, TipoAbbonamento tipo) {
+
+        if (tessera.getAbbonamento() == null) {
+            Abbonamento nuovoAbbonamento = new Abbonamento(LocalDate.now(), epicode, tipo, tessera);
+            tessera.setAbbonamento(nuovoAbbonamento);
+
+            ticketDAO.saveTicket(nuovoAbbonamento);
+            utenteDAO.updateTessera(tessera);
+        } else {
+            tessera.getAbbonamento().setDurata(tipo);
+            utenteDAO.updateTessera(tessera);
+        }
+
+        opzioni.OpzioniUtente(tessera.getUtente());
     }
 }
 

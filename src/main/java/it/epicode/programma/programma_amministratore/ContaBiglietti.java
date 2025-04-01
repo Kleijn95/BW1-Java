@@ -1,4 +1,4 @@
-package it.epicode.programma.amministratore;
+package it.epicode.programma.programma_amministratore;
 
 import it.epicode.biglietti.TicketDAO;
 import it.epicode.rivenditori.RivenditoreDAO;
@@ -36,25 +36,28 @@ public class ContaBiglietti {
                 String inputEndDate = scanner.nextLine();
                 LocalDate endDate = LocalDate.parse(inputEndDate);
 
-                System.out.println("Seleziona l'Id dell'emittente:");
+                System.out.println("Seleziona l'ID dell'emittente:");
                 long id = scanner.nextLong();
 
                 System.out.println("Data partenza: " + inputStartDate);
                 System.out.println("Data fine: " + inputEndDate);
                 System.out.println("Emittente: " + rivenditoreDAO.getRivenditorebyId(id).getLocation());
 
-                System.out.println("Numero di biglietti venduti da: " + rivenditoreDAO.getRivenditorebyId(id).getLocation() + ": " + ticketDAO.getNumBiglietti(startDate, endDate, id));
+                System.out.println("Numero di biglietti venduti da: " + rivenditoreDAO.getRivenditorebyId(id).getLocation() + ": " + ticketDAO.getNumeroBiglietti(startDate, endDate, id));
                 break;
                 case "2":System.out.println("Seleziona l'intervallo di date");
+
                 System.out.println("Data di partenza (formato yyyy-MM-dd):");
                 String inputStartDate2 = scanner.nextLine();
                 LocalDate startDate2 = LocalDate.parse(inputStartDate2);
+
                 System.out.println("Data di fine (formato yyyy-MM-dd):");
                 String inputEndDate2 = scanner.nextLine();
                 LocalDate endDate2 = LocalDate.parse(inputEndDate2);
+
                 System.out.println("Data partenza: " + inputStartDate2);
                 System.out.println("Data fine: " + inputEndDate2);
-                System.out.println("Numero di biglietti vidimati: " + ticketDAO.getNumBigliettiVidimatiIntervalloTempo(startDate2, endDate2));
+                System.out.println("Numero di biglietti vidimati: " + ticketDAO.getNumBigliettiVidimatiPerTempo(startDate2, endDate2));
                 break;
 
         }

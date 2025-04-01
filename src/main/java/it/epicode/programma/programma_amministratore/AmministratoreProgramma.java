@@ -1,30 +1,29 @@
-package it.epicode.programma.amministratore;
+package it.epicode.programma.programma_amministratore;
 
-import it.epicode.Persona;
-import it.epicode.PersonaDAO;
-import it.epicode.programma.acquisti.AcquistoTessera;
+import it.epicode.utente.Utente;
+import it.epicode.utente.UtenteDAO;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
 
 import java.util.Scanner;
 
-public class Amministratore {
-    public void Amministratore() {
+public class AmministratoreProgramma {
+    public void AmministratoreProgramma() {
+        Scanner scanner = new Scanner(System.in);
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("buildweek");
         EntityManager em = emf.createEntityManager();
-        Scanner scanner = new Scanner(System.in);
+        UtenteDAO utenteDAO = new UtenteDAO(em);
 
-        PersonaDAO personaDAO = new PersonaDAO(em);
         OpzioniAmministratore opzioniAmministratore = new OpzioniAmministratore();
 
-        Persona amministratore;
+        Utente amministratore;
         while(true) {
-            System.out.println("Digita il tuo Id Amministratore");
+            System.out.println("Digita il tuo ID Amministratore");
             Long id = scanner.nextLong();
 
-            amministratore = personaDAO.getPersonabyId(id);
-            if (amministratore.getAccessoAmministratore()) {
+            amministratore = utenteDAO.getUtenteById(id);
+            if (amministratore.isAccessoAmministratore()) {
                 System.out.println("Accesso autorizzato");
                 System.out.println("Benvenuto " + amministratore.getNome() + " " + amministratore.getCognome());
                 break;

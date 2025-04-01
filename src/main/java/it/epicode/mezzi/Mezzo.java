@@ -12,29 +12,38 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
-@NamedQuery(name = "mezzo.find.all", query = "SELECT mezzo FROM Mezzo mezzo")
-public abstract class Mezzo {
+@NamedQuery(name = "Mezzo.getAll", query = "SELECT mezzo FROM Mezzo mezzo")
+public class Mezzo {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
+
     @Column(nullable = false)
     private String nome;
+
+    @Enumerated(EnumType.STRING)
+    private TipoMezzo tipoMezzo;
+
     @Column(nullable = false)
     private int capienza;
+
     @Enumerated(EnumType.STRING)
     private StatoMezzo statoMezzo;
+
     @OneToMany(mappedBy = "mezzo", cascade = CascadeType.ALL)
     private List<Tratta> tratte = new ArrayList<>();
+
     private LocalDate dataInizioManutenzione;
     private LocalDate dataFineManutenzione;
 
-    public Mezzo(Long id, String nome, int capienza, StatoMezzo statoMezzo, List<Tratta> tratte) {
-        this.id = id;
+    public Mezzo(String nome, TipoMezzo tipoMezzo, int capienza, List<Tratta> tratte, StatoMezzo statoMezzo) {
         this.nome = nome;
+        this.tipoMezzo = tipoMezzo;
         this.capienza = capienza;
-        this.statoMezzo = statoMezzo;
         this.tratte = tratte;
+        this.statoMezzo = statoMezzo;
     }
+
     public void iniziaManutenzione(LocalDate dataInizio) {
         this.statoMezzo = StatoMezzo.IN_MANUTENZIONE;
         this.dataInizioManutenzione = dataInizio;
@@ -46,7 +55,7 @@ public abstract class Mezzo {
         this.dataFineManutenzione = dataFine;
     }
 
-    public boolean èInManutenzione() {
+    public boolean isInManutenzione() {
         return statoMezzo == StatoMezzo.IN_MANUTENZIONE && dataFineManutenzione == null;
     }
 

@@ -1,14 +1,11 @@
-package it.epicode.programma.amministratore.gestionemezzi;
+package it.epicode.programma.programma_amministratore.programma_gestione_mezzi;
 
-import it.epicode.Persona;
-import it.epicode.PersonaDAO;
+import it.epicode.mezzi.*;
+import it.epicode.utente.Utente;
+import it.epicode.utente.UtenteDAO;
 import it.epicode.biglietti.TicketDAO;
-import it.epicode.mezzi.Mezzo;
-import it.epicode.mezzi.MezzoDAO;
-import it.epicode.mezzi.StatoMezzo;
-import it.epicode.mezzi.Tratta;
 import it.epicode.programma.AvvioProgramma;
-import it.epicode.programma.amministratore.OpzioniAmministratore;
+import it.epicode.programma.programma_amministratore.OpzioniAmministratore;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
@@ -17,18 +14,19 @@ import java.util.Scanner;
 
 public class GestioneParcoMezzi {
     public void GestioneParcoMezzi() {
+        Scanner scanner = new Scanner(System.in);
+
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("buildweek");
         EntityManager em = emf.createEntityManager();
-
-        Scanner scanner = new Scanner(System.in);
-        ManutenzioneMezzi manutenzioneMezzi = new ManutenzioneMezzi();
-        AvvioProgramma avvioProgramma = new AvvioProgramma();
         MezzoDAO mezzoDAO = new MezzoDAO(em);
         TicketDAO ticketDAO = new TicketDAO(em);
+        UtenteDAO utenteDAO = new UtenteDAO(em);
+        TrattaDAO trattaDAO = new TrattaDAO(em);
 
+        Utente amministratore = utenteDAO.getUtenteById(1L);
+
+        ManutenzioneMezzi manutenzioneMezzi = new ManutenzioneMezzi();
         OpzioniAmministratore opzioniAmministratore = new OpzioniAmministratore();
-        PersonaDAO personaDAO = new PersonaDAO(em);
-        Persona amministratore = personaDAO.getPersonabyId(1L);
 
         System.out.println("Mezzi disponibili:");
         mezzoDAO.getAllMezzi().forEach(mezzo ->
@@ -38,7 +36,7 @@ public class GestioneParcoMezzi {
         System.out.println("Scegli ID Mezzo:");
         long idMezzo = scanner.nextLong();
 
-        Mezzo mezzo = mezzoDAO.getMezzobyId(idMezzo);
+        Mezzo mezzo = mezzoDAO.getMezzoById(idMezzo);
         System.out.println(mezzo.getNome());
         System.out.println("Capacità: " + mezzo.getCapienza());
         System.out.println("Stato: " + mezzo.getStatoMezzo());
@@ -53,7 +51,7 @@ public class GestioneParcoMezzi {
             System.out.println("1. Manutenzione");
             System.out.println("2. Controllo biglietti");
             System.out.println("3. Lista tratte");
-            System.out.println("4. Controllo tratte per mezzo");
+            System.out.println("4. Controllo tratte");
 
             System.out.println("N. Torna indietro");
             String scelta = scanner.next().toLowerCase();
@@ -63,7 +61,7 @@ public class GestioneParcoMezzi {
                     manutenzioneMezzi.ManutenzioneMezzi(mezzo);
                     break;
                 case "2":
-                    System.out.println("Numero di biglietti vidimati da questo mezzo: " + ticketDAO.getTicketbyMezzo(mezzo));
+                    System.out.println("Numero di biglietti vidimati: " + ticketDAO.getTicketbyMezzo(mezzo));
                     break;
                 case "3":
                     for (Tratta tratta : mezzo.getTratte()) {
@@ -75,8 +73,8 @@ public class GestioneParcoMezzi {
                     String partenza = scanner.next();
                     System.out.println("Scegli capolinea");
                     String capolinea = scanner.next();
-                    System.out.println("Numero di volte che " + mezzo.getNome() + " fa questa tratta: " + mezzoDAO.numeroTratteUguali(partenza, capolinea, mezzo));
-                    System.out.println("Tempo medio impiegato da " + mezzo.getNome() + " per questa tratta: " + mezzoDAO.tempoMedioTratta(partenza, capolinea, mezzo) + " minuti");
+                    System.out.println("Numero di volte che " + mezzo.getNome() + " fa questa tratta: " + trattaDAO.getNumeroTratteUguali(partenza, capolinea, mezzo));
+                    System.out.println("Tempo medio impiegato da " + mezzo.getNome() + " per questa tratta: " + trattaDAO.getTempoMedioTratta(partenza, capolinea, mezzo) + " minuti");
                     break;
                 }
                 case "n":

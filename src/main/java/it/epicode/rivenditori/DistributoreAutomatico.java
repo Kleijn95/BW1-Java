@@ -10,6 +10,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class DistributoreAutomatico extends Rivenditore {
     public DistributoreAutomatico( String location,  boolean aperto) {
-        super( location, aperto);
+        super(location);
     }
 }

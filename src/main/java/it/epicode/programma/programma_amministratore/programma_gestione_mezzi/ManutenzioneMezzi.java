@@ -1,4 +1,4 @@
-package it.epicode.programma.amministratore.gestionemezzi;
+package it.epicode.programma.programma_amministratore.programma_gestione_mezzi;
 
 import it.epicode.mezzi.Mezzo;
 import it.epicode.mezzi.StatoMezzo;

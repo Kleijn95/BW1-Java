@@ -1,4 +1,4 @@
-package it.epicode;
+package it.epicode.utente;
 
 import it.epicode.biglietti.Abbonamento;
 import it.epicode.rivenditori.Rivenditore;
@@ -19,22 +19,27 @@ public class Tessera {
     private Long id;
     @OneToOne
     @JoinColumn(name = "utente_id", nullable = false)
-    private Persona utente;
+    private Utente utente;
     @Column(nullable = false)
     private LocalDate dataEmissione;
+
     @Column(nullable = false)
     private LocalDate dataScadenza;
+
     @Column(nullable = false)
     private LocalDate dataRinnovo;
+
     @Column(nullable = false)
     private boolean rinnovoAutomatico;
+
     @ManyToOne
     @JoinColumn(nullable = false)
     private Rivenditore emittente;
+
     @OneToOne
     private Abbonamento abbonamento;
 
-    public Tessera(Persona utente, LocalDate dataEmissione, boolean rinnovoAutomatico, Rivenditore emittente) {
+    public Tessera(Utente utente, LocalDate dataEmissione, boolean rinnovoAutomatico, Rivenditore emittente) {
         this.utente = utente;
         this.dataEmissione = dataEmissione;
         this.dataScadenza = dataEmissione.plusYears(1);
