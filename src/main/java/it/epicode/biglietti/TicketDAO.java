@@ -9,6 +9,7 @@ import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
 
 import java.time.LocalDate;
+import java.util.List;
 
 public class TicketDAO {
     private EntityManager em;
@@ -57,6 +58,8 @@ public class TicketDAO {
 
     }
 
-
-
+    public List<Biglietto> getBigliettiDaVidimare() {
+        return em.createNamedQuery("Biglietto.findNonVidimati", Biglietto.class)
+                .getResultList();
+    }
 }

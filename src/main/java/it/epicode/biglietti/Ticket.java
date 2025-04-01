@@ -15,6 +15,7 @@ import java.time.LocalDate;
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 @NamedQuery(name="Biglietti.findyCountByDataAndEmittente", query = "SELECT COUNT(b) FROM Biglietto b WHERE b.dataEmissione between :startDate AND :endDate AND b.emittente = :emittente")
 @NamedQuery(name="Abbonamenti.findyCountByDataAndEmittente", query = "SELECT COUNT(a) FROM Abbonamento a WHERE a.dataEmissione between :startDate AND :endDate AND a.emittente = :emittente")
+
 public abstract class Ticket {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)

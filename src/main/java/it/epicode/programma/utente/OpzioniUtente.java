@@ -2,8 +2,6 @@ package it.epicode.programma.utente;
 
 import it.epicode.Persona;
 import it.epicode.Tessera;
-import it.epicode.mezzi.Mezzo;
-import it.epicode.mezzi.Tram;
 import it.epicode.programma.AvvioProgramma;
 import it.epicode.programma.acquisti.AcquistaBiglietto;
 import it.epicode.programma.acquisti.AcquistoTessera;

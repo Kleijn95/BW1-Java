@@ -24,7 +24,7 @@ public class MainCreate {
 
         /*RivenditoreAutorizzato.rivenditoreEpicode();*/
 
-        Amministratore amministratoreEpicode = new Amministratore("Epicode", "Amministration", null);
+        Amministratore amministratoreEpicode = new Amministratore("Epicode", "Administration", null);
 
         RivenditoreAutorizzato rivenditore = new RivenditoreAutorizzato("Epicode",true);
         DistributoreAutomatico d1 = new DistributoreAutomatico("Milano", false);

@@ -23,11 +23,17 @@ public class VidimaBiglietto {
         TicketDAO ticketDAO = new TicketDAO(em);
 
         System.out.println("Seleziona Id biglietto da vidimare");
+        System.out.println("Biglietti disponibili: ");
+        ticketDAO.getBigliettiDaVidimare().forEach(biglietto ->
+                System.out.println("ID: " + biglietto.getId() + " - " + biglietto.getDataEmissione()));
         long idBiglietto = scanner.nextLong();
         scanner.nextLine();
         Biglietto biglietto = (Biglietto) ticketDAO.getTicketbyId(idBiglietto);
 
-        System.out.println("Digita Id del mezzo");
+        System.out.println("Digita ID del mezzo");
+        System.out.println("Mezzi disponibili:");
+        mezzoDAO.getAllMezzi().forEach(mezzo ->
+                System.out.println("ID: " + mezzo.getId() + " - " + mezzo.getNome()));
 
         long idMezzo = scanner.nextLong();
         scanner.nextLine();

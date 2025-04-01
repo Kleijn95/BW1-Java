@@ -15,6 +15,7 @@ import java.time.LocalDate;
 
 @NamedQuery(name="Biglietto.findyByVidimatoInPeriodo", query = "SELECT COUNT(b) FROM Biglietto b WHERE b.vidimato = true AND b.dataVidimazione BETWEEN :dataInizio AND :dataFine")
 @NamedQuery(name = "Biglietto.findByMezzo", query = "SELECT COUNT(b) FROM Biglietto b WHERE b.mezzo = :mezzo")
+@NamedQuery(name = "Biglietto.findNonVidimati", query = "SELECT b FROM Biglietto b WHERE b.vidimato = false")
 public class Biglietto extends Ticket {
     @Column(nullable = false)
     private boolean vidimato = false;
@@ -28,8 +29,6 @@ public class Biglietto extends Ticket {
         this.mezzo = mezzo;
         this.vidimato = (mezzo != null);  // Se ha un mezzo, è vidimato
         this.dataVidimazione = null;
-
-
     }
 }
 
