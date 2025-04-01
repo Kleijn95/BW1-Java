@@ -1,12 +1,15 @@
 package it.epicode.mezzi;
 
 import jakarta.persistence.*;
+import jdk.jfr.Name;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
 @Entity
+@NamedQuery(name="mezzo.numeroTratteUguali", query= "SELECT count(t) from Tratta t where t.partenza = :partenza and t.capolinea = :capolinea and t.mezzo = :mezzo")
+@NamedQuery(name="mezzo.tempoMedioTratta", query = "SELECT AVG(t.tempoPercorrenza) from Tratta t where t.partenza = :partenza and t.capolinea = :capolinea and t.mezzo = :mezzo")
 public class Tratta {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
@@ -29,3 +32,5 @@ public class Tratta {
         this.mezzo = mezzi;
     }
 }
+
+

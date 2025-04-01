@@ -29,6 +29,7 @@ public class AcquistaBiglietto {
     public void vidima(Biglietto biglietto, Mezzo mezzo) {
         biglietto.setMezzo(mezzo);
         biglietto.setVidimato(true);  // Segna il biglietto come vidimato
+        biglietto.setDataVidimazione(LocalDate.now());
         em.getTransaction().begin();
         em.merge(biglietto);
         em.getTransaction().commit();

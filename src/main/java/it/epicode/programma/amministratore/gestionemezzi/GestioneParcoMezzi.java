@@ -37,7 +37,9 @@ public class GestioneParcoMezzi {
 
         System.out.println("Vuoi controllare i mezzi?");
         System.out.println("1. Controlla mezzi");
+
         System.out.println("2. Esci");
+
 
         String scelta2 = scanner.next();
 
@@ -58,8 +60,10 @@ public class GestioneParcoMezzi {
             while (true) {
                 System.out.println("Scegli operazione");
                 System.out.println("1. Manutenzione");
-                System.out.println("2. Controllo tratte");
-                System.out.println("3. Controllo biglietti");
+                System.out.println("2. Controllo biglietti");
+                System.out.println("3. Lista tratte");
+                System.out.println("4. Controllo tratte per mezzo");
+
                 System.out.println("N. Torna indietro");
                 String scelta = scanner.next().toLowerCase();
 
@@ -68,12 +72,22 @@ public class GestioneParcoMezzi {
                         manutenzioneMezzi.ManutenzioneMezzi(mezzo);
                         break;
                     case "2":
+                        System.out.println("Numero di biglietti vidimati da questo mezzo: " + ticketDAO.getTicketbyMezzo(mezzo));
+                        break;
+                    case "3":
                         for (Tratta tratta : mezzo.getTratte()) {
                             System.out.println("Partenza: " + tratta.getPartenza() + " - Capolinea: " + tratta.getCapolinea());
                         }
-                    case "3":
-                        System.out.println("Numero di biglietti vidimati da questo mezzo: " + ticketDAO.getTicketbyMezzo(mezzo));
                         break;
+                    case "4": {
+                        System.out.println("Scegli partenza");
+                        String partenza = scanner.next();
+                        System.out.println("Scegli capolinea");
+                        String capolinea = scanner.next();
+                        System.out.println("Numero di volte che " + mezzo.getNome() + " fa questa tratta: " + mezzoDAO.numeroTratteUguali(partenza, capolinea, mezzo));
+                        System.out.println("Tempo medio impiegato da " + mezzo.getNome() + " per questa tratta: " + mezzoDAO.tempoMedioTratta(partenza, capolinea, mezzo) + " minuti");
+                        break;
+                    }
                     case "n":
                         opzioniAmministratore.OpzioniAmministratore(amministratore);
                         break;
@@ -84,7 +98,10 @@ public class GestioneParcoMezzi {
             }
         } else if (scelta2.equals("2")) {
             opzioniAmministratore.OpzioniAmministratore(amministratore);
-        } else {
+        }
+
+
+        else {
             System.out.println("Comando non riconosciuto");
             GestioneParcoMezzi();
         }

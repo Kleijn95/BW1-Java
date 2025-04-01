@@ -49,6 +49,14 @@ public class TicketDAO {
 
     }
 
+    public Long getNumBigliettiVidimatiIntervalloTempo(LocalDate startDate, LocalDate endDate){
+        return em.createNamedQuery("Biglietto.findyByVidimatoInPeriodo", Long.class)
+                .setParameter("dataInizio", startDate)
+                .setParameter("dataFine", endDate)
+                .getSingleResult();
+
+    }
+
 
 
 }

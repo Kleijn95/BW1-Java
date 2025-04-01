@@ -22,6 +22,7 @@ public class OpzioniAmministratore {
             System.out.println("N. Torna indietro");
             System.out.println("0. Chiudi il programma");
 
+
             String scelta = scanner.next().toLowerCase();
             scanner.nextLine();
             switch (scelta) {
