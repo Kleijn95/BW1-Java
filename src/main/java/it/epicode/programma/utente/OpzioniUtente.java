@@ -2,6 +2,8 @@ package it.epicode.programma.utente;
 
 import it.epicode.Persona;
 import it.epicode.Tessera;
+import it.epicode.mezzi.Mezzo;
+import it.epicode.mezzi.Tram;
 import it.epicode.programma.AvvioProgramma;
 import it.epicode.programma.acquisti.AcquistaBiglietto;
 import it.epicode.programma.acquisti.AcquistoTessera;
@@ -13,6 +15,7 @@ public class OpzioniUtente {
         Scanner scanner = new Scanner(System.in);
 
         AcquistoTessera acquistoTessera = new AcquistoTessera();
+        VidimaBiglietto vidimaBiglietto = new VidimaBiglietto();
 
         while (true) {
             System.out.println("Seleziona Operazione: ");
@@ -21,8 +24,10 @@ public class OpzioniUtente {
             if (utente.getTessera() != null) {
                 System.out.println("3. Rinnova Tessera");
                 System.out.println("4. Acquista o Cambia Abbonamento");
+                System.out.println("5. Vidima biglietto");
             } else {
                 System.out.println("3. Acquista Tessera");
+                System.out.println("4. Vidima biglietto");
             }
             System.out.println("N. Torna indietro");
             System.out.println("0. Esci");
@@ -62,7 +67,15 @@ public class OpzioniUtente {
                             acquistoTessera.AcquistaAbbonamento(utente.getTessera());
                             break;
                         } else {
+                            vidimaBiglietto.VidimaBiglietto();
+                            break;
+                        }
+                case "5": if(utente.getTessera() != null) {
+                            vidimaBiglietto.VidimaBiglietto();
+                            break;
+                        } else {
                             System.out.println("Comando non riconosciuto");
+                            OpzioniUtente(utente);
                             break;
                         }
                 case "n":

@@ -1,6 +1,8 @@
 package it.epicode.biglietti;
 
 
+import it.epicode.mezzi.Mezzo;
+import it.epicode.rivenditori.Rivenditore;
 import it.epicode.rivenditori.RivenditoreDAO;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
@@ -19,6 +21,16 @@ public class TicketDAO {
 
     EntityManagerFactory emf = Persistence.createEntityManagerFactory("buildweek");
 
+    public Ticket getTicketbyId(Long id) {
+        return em.find(Ticket.class, id);
+    }
+
+    public Long getTicketbyMezzo(Mezzo mezzo) {
+        return em.createNamedQuery("Biglietto.findByMezzo", Long.class)
+                .setParameter("mezzo", mezzo)
+                .getSingleResult();
+    }
+
     public Long getNumAbb(LocalDate startDate, LocalDate endDate, Long emittenteId){
         return em.createNamedQuery("Abbonamenti.findyCountByDataAndEmittente", Long.class)
                 .setParameter("startDate", startDate)
@@ -36,7 +48,6 @@ public class TicketDAO {
                 .getSingleResult();
 
     }
-
 
 
 

@@ -1,5 +1,6 @@
 package it.epicode.programma;
 
+import it.epicode.programma.amministratore.Amministratore;
 import it.epicode.programma.utente.Utente;
 
 import java.util.Scanner;
@@ -15,11 +16,12 @@ public class AvvioProgramma {
         String scelta = scanner.nextLine();
 
         Utente utente = new Utente();
+        Amministratore amministratore = new Amministratore();
 
         while(true) {
             switch (scelta) {
                 case "1": utente.Utente(); break;
-                /*case "2": Amministratore(); break;*/
+                case "2": amministratore.Amministratore(); break;
                 case "0":
                     System.out.println("Chiusura in corso...");
                     System.exit(0);

@@ -10,6 +10,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
+@SequenceGenerator(
+        name = "sequence2",
+        sequenceName = "sequence2",
+        initialValue = 2,
+        allocationSize = 1
+)
 @Data
 @NoArgsConstructor
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)

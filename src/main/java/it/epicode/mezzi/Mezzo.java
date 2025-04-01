@@ -12,6 +12,7 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
+@NamedQuery(name = "mezzo.find.all", query = "SELECT mezzo FROM Mezzo mezzo")
 public abstract class Mezzo {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)

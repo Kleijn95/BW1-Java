@@ -1,6 +1,7 @@
 package it.epicode.programma.acquisti;
 
 import it.epicode.biglietti.Biglietto;
+import it.epicode.mezzi.Mezzo;
 import it.epicode.rivenditori.Rivenditore;
 import it.epicode.rivenditori.RivenditoreDAO;
 import jakarta.persistence.EntityManager;
@@ -23,5 +24,13 @@ public class AcquistaBiglietto {
         em.persist(nuovoBiglietto);
         em.getTransaction().commit();
         System.out.println("Biglietto Acquistato");
+    }
+
+    public void vidima(Biglietto biglietto, Mezzo mezzo) {
+        biglietto.setMezzo(mezzo);
+        biglietto.setVidimato(true);  // Segna il biglietto come vidimato
+        em.getTransaction().begin();
+        em.merge(biglietto);
+        em.getTransaction().commit();
     }
 }
