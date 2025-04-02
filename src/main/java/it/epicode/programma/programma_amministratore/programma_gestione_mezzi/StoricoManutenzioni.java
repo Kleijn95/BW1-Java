@@ -39,7 +39,7 @@ public class StoricoManutenzioni {
                     System.out.println("Mezzo: " + mezzo.getNome());
                     System.out.println("Stato: " + mezzo.getStatoMezzo());
                     System.out.println("Data inizio Manutenzione: " + manutenzioneTrovata.getDataInizioManutenzione());
-                    System.out.println("Data fine Manutenzione prevista: " + manutenzioneTrovata.getDataInizioManutenzione().plusDays(14));
+                    System.out.println("Data fine Manutenzione: " + manutenzioneTrovata.getDataInizioManutenzione().plusDays(14));
                     if(manutenzioneTrovata.isCambioOlio()) {
                         System.out.println("Cambio olio: " + manutenzioneTrovata.getPrezzoCambioOlio() + " €;");
                     }
