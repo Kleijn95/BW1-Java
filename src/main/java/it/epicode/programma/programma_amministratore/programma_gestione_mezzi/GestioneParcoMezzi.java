@@ -32,11 +32,18 @@ public class GestioneParcoMezzi {
         mezzoDAO.getAllMezzi().forEach(mezzo ->
                 System.out.println("ID: " + mezzo.getId() + " - Mezzo: " + mezzo.getNome() + " - " + mezzo.getStatoMezzo())
         );
+        Mezzo mezzo;
+        while (true) {
+            System.out.println("Scegli ID Mezzo:");
+            long idMezzo = scanner.nextLong();
 
-        System.out.println("Scegli ID Mezzo:");
-        long idMezzo = scanner.nextLong();
-
-        Mezzo mezzo = mezzoDAO.getMezzoById(idMezzo);
+            if (mezzoDAO.getMezzoById(idMezzo) != null) {
+                mezzo = mezzoDAO.getMezzoById(idMezzo);
+                break;
+            } else {
+                System.out.println("Nessun mezzo trovato");
+            }
+        }
         System.out.println(mezzo.getNome());
         System.out.println("Capacità: " + mezzo.getCapienza());
         System.out.println("Stato: " + mezzo.getStatoMezzo());
@@ -70,7 +77,7 @@ public class GestioneParcoMezzi {
                     System.out.println("Scegli capolinea");
                     String capolinea = scanner.nextLine().toLowerCase();
                     System.out.println("Numero di volte che " + mezzo.getNome() + " fa questa tratta: " + trattaDAO.getNumeroTratteUguali(partenza, capolinea, mezzo));
-                    if (trattaDAO.getNumeroTratteUguali(partenza, capolinea, mezzo) > 1) {
+                    if (trattaDAO.getNumeroTratteUguali(partenza, capolinea, mezzo) >= 1) {
                         System.out.println("Tempo medio impiegato da " + mezzo.getNome() + " per questa tratta: " + trattaDAO.getTempoMedioTratta(partenza, capolinea, mezzo) + " minuti");
                     } else {
                         System.out.println("Nessuna media disponibile.");
