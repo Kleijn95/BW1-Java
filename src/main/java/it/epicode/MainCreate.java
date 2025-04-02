@@ -2,12 +2,9 @@ package it.epicode;
 
 import it.epicode.biglietti.Abbonamento;
 import it.epicode.biglietti.Biglietto;
+import it.epicode.mezzi.*;
 import it.epicode.utente.Tessera;
 import it.epicode.biglietti.TipoAbbonamento;
-import it.epicode.mezzi.Mezzo;
-import it.epicode.mezzi.StatoMezzo;
-import it.epicode.mezzi.TipoMezzo;
-import it.epicode.mezzi.Tratta;
 import it.epicode.rivenditori.DistributoreAutomatico;
 import it.epicode.rivenditori.RivenditoreAutorizzato;
 import it.epicode.utente.Amministratore;
@@ -77,6 +74,25 @@ public class MainCreate {
 
         em.persist(tram);
         em.persist(bus);
+
+        // MANUTENZIONI
+
+        Manutenzione manutenzione1 = new Manutenzione(true, false, false, false, bus, LocalDate.of(2022, 10, 10), LocalDate.of(2022, 11, 10));
+        Manutenzione manutenzione2 = new Manutenzione(false, true, false, false, tram, LocalDate.of(2022, 11, 15), LocalDate.of(2022, 12, 15));
+        Manutenzione manutenzione3 = new Manutenzione(false, false, true, false, bus, LocalDate.of(2022, 12, 20), LocalDate.of(2023, 1, 20));
+        Manutenzione manutenzione4 = new Manutenzione(false, false, false, true, tram, LocalDate.of(2023, 1, 25), LocalDate.of(2023, 2, 25));
+        Manutenzione manutenzione5 = new Manutenzione(true, true, false, false, bus, LocalDate.of(2023, 3, 1), LocalDate.of(2023, 4, 1));
+        Manutenzione manutenzione6 = new Manutenzione(false, false, true, false, tram, LocalDate.of(2023, 4, 10), LocalDate.of(2023, 5, 10));
+
+        em.persist(manutenzione1);
+        em.persist(manutenzione2);
+        em.persist(manutenzione3);
+        em.persist(manutenzione4);
+        em.persist(manutenzione5);
+        em.persist(manutenzione6);
+
+        tram.setManutenzioni(new ArrayList<>(List.of(manutenzione2, manutenzione4, manutenzione6)));
+        bus.setManutenzioni(new ArrayList<>(List.of(manutenzione1, manutenzione3, manutenzione5)));
 
         // TRATTE
         Tratta tratta1 = new Tratta(null, "Piazza Centrale", "Stazione", 15, tram);

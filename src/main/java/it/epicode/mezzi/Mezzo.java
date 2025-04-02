@@ -11,7 +11,6 @@ import java.util.List;
 @Entity
 @Data
 @NoArgsConstructor
-@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 @NamedQuery(name = "Mezzo.getAll", query = "SELECT mezzo FROM Mezzo mezzo")
 public class Mezzo {
     @Id
@@ -33,8 +32,14 @@ public class Mezzo {
     @OneToMany(mappedBy = "mezzo", cascade = CascadeType.ALL)
     private List<Tratta> tratte = new ArrayList<>();
 
-    private LocalDate dataInizioManutenzione;
-    private LocalDate dataFineManutenzione;
+    @OneToMany(mappedBy = "mezzo", cascade = CascadeType.ALL)
+    private List <Manutenzione> manutenzioni = new ArrayList<>();
+
+    @OneToOne
+    private Manutenzione manutenzioneInCorso;
+
+    @Column(name = "prossima_manutenzione")
+    private LocalDate prossimaManutenzione;
 
     public Mezzo(String nome, TipoMezzo tipoMezzo, int capienza, List<Tratta> tratte, StatoMezzo statoMezzo) {
         this.nome = nome;
@@ -44,19 +49,15 @@ public class Mezzo {
         this.statoMezzo = statoMezzo;
     }
 
-    public void iniziaManutenzione(LocalDate dataInizio) {
+    public void iniziaManutenzione(boolean olio, boolean freni, boolean gomme, boolean revisione, Mezzo mezzo) {
         this.statoMezzo = StatoMezzo.IN_MANUTENZIONE;
-        this.dataInizioManutenzione = dataInizio;
-        this.dataFineManutenzione = null;
+        Manutenzione nuovaManutenzione = new Manutenzione(olio, freni, gomme, revisione, mezzo, LocalDate.now(), LocalDate.now().plusDays(14));
+        this.setManutenzioneInCorso(nuovaManutenzione);
     }
 
-    public void terminaManutenzione(LocalDate dataFine) {
+    public void terminaManutenzione() {
         this.statoMezzo = StatoMezzo.IN_SERVIZIO;
-        this.dataFineManutenzione = dataFine;
+        this.manutenzioneInCorso.setDataFineManutenzione(LocalDate.now());
+        this.setProssimaManutenzione(LocalDate.now().plusDays(30));
     }
-
-    public boolean isInManutenzione() {
-        return statoMezzo == StatoMezzo.IN_MANUTENZIONE && dataFineManutenzione == null;
-    }
-
 }

@@ -41,11 +41,6 @@ public class GestioneParcoMezzi {
         System.out.println("Capacità: " + mezzo.getCapienza());
         System.out.println("Stato: " + mezzo.getStatoMezzo());
 
-        if (!mezzo.getStatoMezzo().equals(StatoMezzo.IN_SERVIZIO)) {
-            System.out.println("Data inizio Manutenzione: " + mezzo.getDataInizioManutenzione());
-            System.out.println("Data fine Manutenzione prevista: " + mezzo.getDataFineManutenzione());
-        }
-
         while (true) {
             System.out.println("Scegli operazione");
             System.out.println("1. Manutenzione");
@@ -55,6 +50,7 @@ public class GestioneParcoMezzi {
 
             System.out.println("N. Torna indietro");
             String scelta = scanner.next().toLowerCase();
+            scanner.nextLine();
 
             switch (scelta) {
                 case "1":
@@ -70,11 +66,15 @@ public class GestioneParcoMezzi {
                     break;
                 case "4": {
                     System.out.println("Scegli partenza");
-                    String partenza = scanner.next();
+                    String partenza = scanner.nextLine().toLowerCase();
                     System.out.println("Scegli capolinea");
-                    String capolinea = scanner.next();
+                    String capolinea = scanner.nextLine().toLowerCase();
                     System.out.println("Numero di volte che " + mezzo.getNome() + " fa questa tratta: " + trattaDAO.getNumeroTratteUguali(partenza, capolinea, mezzo));
-                    System.out.println("Tempo medio impiegato da " + mezzo.getNome() + " per questa tratta: " + trattaDAO.getTempoMedioTratta(partenza, capolinea, mezzo) + " minuti");
+                    if (trattaDAO.getNumeroTratteUguali(partenza, capolinea, mezzo) > 1) {
+                        System.out.println("Tempo medio impiegato da " + mezzo.getNome() + " per questa tratta: " + trattaDAO.getTempoMedioTratta(partenza, capolinea, mezzo) + " minuti");
+                    } else {
+                        System.out.println("Nessuna media disponibile.");
+                    }
                     break;
                 }
                 case "n":
