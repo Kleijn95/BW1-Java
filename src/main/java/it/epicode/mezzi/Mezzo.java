@@ -36,12 +36,11 @@ public class Mezzo {
     private List <Manutenzione> manutenzioni = new ArrayList<>();
 
     @OneToOne
+    @JoinColumn(name = "manutenzione_in_corso_id")
     private Manutenzione manutenzioneInCorso;
 
     @Embedded
     private Consumo consumo;
-
-
 
     @Column(name = "prossima_manutenzione")
     private LocalDate prossimaManutenzione;

@@ -43,10 +43,10 @@ public class Manutenzione {
     @JoinColumn(nullable = false)
     private Mezzo mezzo;
 
-    @Column(name = "data_inizio", nullable = false)
+    @Column(name = "data_inizio_manutenzione", nullable = false)
     private LocalDate dataInizioManutenzione;
 
-    @Column(name = "data_fine", nullable = false)
+    @Column(name = "data_fine_manutenzione", nullable = false)
     private LocalDate dataFineManutenzione;
 
     public double costoTotale() {
@@ -65,12 +65,18 @@ public class Manutenzione {
         this.prezzoCambioOlio = costoManutenzione(cambioOlio, 50.0);
         this.freni = freni;
         this.prezzoFreni = costoManutenzione(freni, 70.0);
-        this.gomme = gomme;
-        this.prezzoGomme = costoManutenzione(gomme, 100.0);
+        this.mezzo = mezzo;
+        if(this.getMezzo().getTipoMezzo() != TipoMezzo.TRAM) {
+            this.gomme = false;
+            this.prezzoGomme = 0.0;
+        } else {
+            this.gomme = gomme;
+            this.prezzoGomme = costoManutenzione(gomme, 100.0);
+        }
         this.revisione = revisione;
         this.prezzoRevisione = costoManutenzione(revisione, 80.0);
         this.costoTotale = costoTotale();
-        this.mezzo = mezzo;
+
         this.dataInizioManutenzione = dataInizioManutenzione;
         this.dataFineManutenzione = dataFineManutenzione;
     }

@@ -21,13 +21,17 @@ public class Rifornimento {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
+    @Column(nullable = false, name="data_rifornimento")
     private LocalDate dataRifornimento;
     @Enumerated(EnumType.STRING)
+    @Column(nullable = false, name="tipo_carburante")
     private TipoCarburante tipoCarburante;
+    @Column(nullable = false)
     private double quantita;
     @ManyToOne
     @JoinColumn(name = "mezzo_id", nullable = false)
     private Mezzo mezzo;
+    @Column(nullable = false, name= "costo_rifornimento")
     private double costoRifornimento;
 
 

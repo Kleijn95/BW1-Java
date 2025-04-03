@@ -100,13 +100,13 @@ public class MainCreate {
         bus.setManutenzioni(new ArrayList<>(List.of(manutenzione1, manutenzione3, manutenzione5)));
 
         // TRATTE
-        Tratta tratta1 = new Tratta(null, "Piazza Centrale", "Stazione", 15, tram, 20, LocalDate.of(2025, 1, 2));
-        Tratta tratta2 = new Tratta(null, "Aereoporto", "Centrale", 30, tram, 25, LocalDate.of(2025, 3, 5));
-        Tratta tratta3 = new Tratta(null, "Aereoporto", "Centrale", 25, tram,25, LocalDate.of(2025, 1, 5));
+        Tratta tratta1 = new Tratta("Piazza Centrale", "Stazione", 1.2, tram, 20, LocalDate.of(2025, 1, 2));
+        Tratta tratta2 = new Tratta("Aereoporto", "Centrale", 1.0, tram, 25, LocalDate.of(2025, 3, 5));
+        Tratta tratta3 = new Tratta("Aereoporto", "Centrale", 0.8, tram,25, LocalDate.of(2025, 1, 5));
 
-        Tratta tratta4 = new Tratta(null, "Piazza del Popolo", "Piazzale Ostiense", 20, bus,50, LocalDate.of(2025, 4, 1));
-        Tratta tratta5 = new Tratta(null, "Termini", "Piazza Venezia", 25, bus,10, LocalDate.of(2025, 1, 6));
-        Tratta tratta6 = new Tratta(null, "Stazione Tiburtina", "Piazza Bologna", 30, bus,15, LocalDate.of(2025, 2, 4));
+        Tratta tratta4 = new Tratta("Piazza del Popolo", "Piazzale Ostiense", 1.3, bus,50, LocalDate.of(2025, 4, 1));
+        Tratta tratta5 = new Tratta("Termini", "Piazza Venezia", 1, bus,10, LocalDate.of(2025, 1, 6));
+        Tratta tratta6 = new Tratta("Stazione Tiburtina", "Piazza Bologna", 1.5, bus,15, LocalDate.of(2025, 2, 4));
 
         em.persist(tratta1);
         em.persist(tratta2);

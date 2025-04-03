@@ -1,9 +1,6 @@
 package it.epicode.programma.programma_amministratore.programma_gestione_mezzi;
 
-import it.epicode.mezzi.Manutenzione;
-import it.epicode.mezzi.Mezzo;
-import it.epicode.mezzi.MezzoDAO;
-import it.epicode.mezzi.StatoMezzo;
+import it.epicode.mezzi.*;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
@@ -75,7 +72,7 @@ public class ManutenzioneMezzi {
                                     if(mezzo.getManutenzioneInCorso().isFreni()) {
                                         System.out.println("Revisione freni: " + mezzo.getManutenzioneInCorso().getPrezzoFreni() + " €;");
                                     }
-                                    if(mezzo.getManutenzioneInCorso().isGomme()) {
+                                    if(mezzo.getManutenzioneInCorso().isGomme() && mezzo.getTipoMezzo() != TipoMezzo.TRAM) {
                                         System.out.println("Cambio gomme: " + mezzo.getManutenzioneInCorso().getPrezzoGomme() + " €;");
                                     }
                                     if(mezzo.getManutenzioneInCorso().isRevisione()) {
