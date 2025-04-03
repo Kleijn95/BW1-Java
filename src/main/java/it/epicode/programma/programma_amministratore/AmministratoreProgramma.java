@@ -22,13 +22,17 @@ public class AmministratoreProgramma {
             System.out.println("Digita il tuo ID Amministratore");
             Long id = scanner.nextLong();
 
-            amministratore = utenteDAO.getUtenteById(id);
-            if (amministratore.isAccessoAmministratore()) {
-                System.out.println("Accesso autorizzato");
-                System.out.println("Benvenuto " + amministratore.getNome() + " " + amministratore.getCognome());
-                break;
+            if(utenteDAO.getUtenteById(id) == null) {
+                System.out.println("ID non trovato");
             } else {
-                System.out.println("Accesso negato");
+                amministratore = utenteDAO.getUtenteById(id);
+                if (amministratore.isAccessoAmministratore()) {
+                    System.out.println("Accesso autorizzato");
+                    System.out.println("Benvenuto " + amministratore.getNome() + " " + amministratore.getCognome());
+                    break;
+                } else {
+                    System.out.println("Accesso negato");
+                }
             }
         }
         opzioniAmministratore.OpzioniAmministratore(amministratore);

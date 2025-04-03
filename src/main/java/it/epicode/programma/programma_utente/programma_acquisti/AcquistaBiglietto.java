@@ -15,13 +15,9 @@ public class AcquistaBiglietto {
     static EntityManagerFactory emf = Persistence.createEntityManagerFactory("buildweek");
     static EntityManager em = emf.createEntityManager();
 
-    RivenditoreDAO rivenditoreDAO = new RivenditoreDAO(em);
     TicketDAO ticketDAO = new TicketDAO(em);
-
-    Rivenditore epicode = rivenditoreDAO.getRivenditorebyId(1L);
-
-    public void AcquistaBiglietto() {
-        Biglietto nuovoBiglietto = new Biglietto(LocalDate.now(), epicode, null);
+    public void AcquistaBiglietto(Rivenditore rivenditore) {
+        Biglietto nuovoBiglietto = new Biglietto(LocalDate.now(), rivenditore, null);
         ticketDAO.saveTicket(nuovoBiglietto);
         System.out.println("Biglietto Acquistato");
     }

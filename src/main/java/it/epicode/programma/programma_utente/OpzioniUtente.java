@@ -1,6 +1,7 @@
 package it.epicode.programma.programma_utente;
 
 import it.epicode.programma.programma_utente.programma_acquisti.VidimaBiglietto;
+import it.epicode.rivenditori.Rivenditore;
 import it.epicode.utente.Utente;
 import it.epicode.utente.Tessera;
 import it.epicode.programma.AvvioProgramma;
@@ -10,7 +11,7 @@ import it.epicode.programma.programma_utente.programma_acquisti.AcquistoTessera;
 import java.util.Scanner;
 
 public class OpzioniUtente {
-    public void OpzioniUtente(Utente utente) {
+    public void OpzioniUtente(Utente utente, Rivenditore rivenditore) {
         Scanner scanner = new Scanner(System.in);
 
         AcquistoTessera acquistoTessera = new AcquistoTessera();
@@ -51,18 +52,18 @@ public class OpzioniUtente {
                     }
                     break;
                 case "2":
-                    acquistaBiglietto.AcquistaBiglietto();
+                    acquistaBiglietto.AcquistaBiglietto(rivenditore);
                     break;
                 case "3":
                     if (utente.getTessera() != null) {
                         Tessera tessera = utente.getTessera();
                         acquistoTessera.RinnovaTessera(tessera);
                     } else {
-                        acquistoTessera.AcquistaTessera(utente);
+                        acquistoTessera.AcquistaTessera(utente, rivenditore);
                     }
                     break;
                 case "4": if(utente.getTessera() != null) {
-                            acquistoTessera.AcquistaAbbonamento(utente.getTessera());
+                            acquistoTessera.AcquistaAbbonamento(utente.getTessera(), rivenditore);
                             break;
                         } else {
                             vidimaBiglietto.VidimaBiglietto();
@@ -84,7 +85,7 @@ public class OpzioniUtente {
                     System.out.println("Comando non riconosciuto");
                     break;
             }
-            OpzioniUtente(utente);
+            OpzioniUtente(utente, rivenditore);
         }
     }
 }

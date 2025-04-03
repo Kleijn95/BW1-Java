@@ -34,8 +34,12 @@ public class MainCreate {
 
         // RIVENDITORI
         RivenditoreAutorizzato rivenditore = new RivenditoreAutorizzato("Epicode");
+        RivenditoreAutorizzato rivenditore2 = new RivenditoreAutorizzato("Roma");
+        RivenditoreAutorizzato rivenditore3 = new RivenditoreAutorizzato("Milano");
         em.persist(rivenditore);
         rivenditore.setId(1L);
+        em.persist(rivenditore2);
+        em.persist(rivenditore3);
 
         DistributoreAutomatico d1 = new DistributoreAutomatico("Milano", false);
         em.persist(d1);
@@ -73,8 +77,6 @@ public class MainCreate {
         Mezzo bus = new Mezzo("Autobus 1", TipoMezzo.AUTOBUS, 50, null, StatoMezzo.IN_SERVIZIO);
 
 
-
-
         em.persist(tram);
         em.persist(bus);
 
@@ -98,13 +100,13 @@ public class MainCreate {
         bus.setManutenzioni(new ArrayList<>(List.of(manutenzione1, manutenzione3, manutenzione5)));
 
         // TRATTE
-        Tratta tratta1 = new Tratta(null, "Piazza Centrale", "Stazione", 15, tram, 20, LocalDate.of(2023, 1, 1));
-        Tratta tratta2 = new Tratta(null, "Aereoporto", "Centrale", 30, tram, 25, LocalDate.of(2023, 4, 5));
-        Tratta tratta3 = new Tratta(null, "Aereoporto", "Centrale", 25, tram,25, LocalDate.of(2023, 4, 5));
+        Tratta tratta1 = new Tratta(null, "Piazza Centrale", "Stazione", 15, tram, 20, LocalDate.of(2025, 1, 2));
+        Tratta tratta2 = new Tratta(null, "Aereoporto", "Centrale", 30, tram, 25, LocalDate.of(2025, 3, 5));
+        Tratta tratta3 = new Tratta(null, "Aereoporto", "Centrale", 25, tram,25, LocalDate.of(2025, 1, 5));
 
-        Tratta tratta4 = new Tratta(null, "Piazza del Popolo", "Piazzale Ostiense", 20, bus,50, LocalDate.of(2024, 5, 6));
-        Tratta tratta5 = new Tratta(null, "Termini", "Piazza Venezia", 25, bus,10, LocalDate.of(2024, 5, 6));
-        Tratta tratta6 = new Tratta(null, "Stazione Tiburtina", "Piazza Bologna", 30, bus,15, LocalDate.of(2024, 7, 4));
+        Tratta tratta4 = new Tratta(null, "Piazza del Popolo", "Piazzale Ostiense", 20, bus,50, LocalDate.of(2025, 4, 1));
+        Tratta tratta5 = new Tratta(null, "Termini", "Piazza Venezia", 25, bus,10, LocalDate.of(2025, 1, 6));
+        Tratta tratta6 = new Tratta(null, "Stazione Tiburtina", "Piazza Bologna", 30, bus,15, LocalDate.of(2025, 2, 4));
 
         em.persist(tratta1);
         em.persist(tratta2);

@@ -19,16 +19,13 @@ import java.util.Scanner;
 public class AcquistoTessera {
     EntityManagerFactory emf = Persistence.createEntityManagerFactory("buildweek");
     EntityManager em = emf.createEntityManager();
-    RivenditoreDAO rivenditoreDAO = new RivenditoreDAO(em);
     UtenteDAO utenteDAO = new UtenteDAO(em);
     TicketDAO ticketDAO = new TicketDAO(em);
 
-    Rivenditore epicode = rivenditoreDAO.getRivenditorebyId(1L);
-
     OpzioniUtente opzioni = new OpzioniUtente();
 
-    public void AcquistaTessera(Utente utente) {
-        Tessera nuovaTessera = new Tessera(utente, LocalDate.now(), true, epicode);
+    public void AcquistaTessera(Utente utente, Rivenditore rivenditore) {
+        Tessera nuovaTessera = new Tessera(utente, LocalDate.now(), true, rivenditore);
         utente.setTessera(nuovaTessera);
 
         utenteDAO.saveTessera(nuovaTessera);
@@ -46,7 +43,7 @@ public class AcquistoTessera {
         System.out.println(tessera.getDataScadenza());
     }
 
-    public void AcquistaAbbonamento(Tessera tessera) {
+    public void AcquistaAbbonamento(Tessera tessera, Rivenditore rivenditore) {
         Scanner scanner = new Scanner(System.in);
         while (true) {
             System.out.println("Che tipo di abbonamento vuoi?");
@@ -64,10 +61,10 @@ public class AcquistoTessera {
             TipoAbbonamento tipo = null;
             switch (scelta) {
                 case "1": tipo = TipoAbbonamento.SETTIMANALE;
-                    AcquistaAbbonamento(tessera, tipo);
+                    AcquistaAbbonamento(tessera, tipo, rivenditore);
                 break;
                 case "2": tipo = TipoAbbonamento.MENSILE;
-                    AcquistaAbbonamento(tessera, tipo);
+                    AcquistaAbbonamento(tessera, tipo, rivenditore);
                 break;
                 case "3": {
                     if (tessera.getAbbonamento() != null) {
@@ -83,14 +80,14 @@ public class AcquistoTessera {
                 default:
                     System.out.println("Comando non riconosciuto");
             }
-            opzioni.OpzioniUtente(tessera.getUtente());
+            opzioni.OpzioniUtente(tessera.getUtente(), rivenditore);
         }
     }
 
-    public void AcquistaAbbonamento(Tessera tessera, TipoAbbonamento tipo) {
+    public void AcquistaAbbonamento(Tessera tessera, TipoAbbonamento tipo, Rivenditore rivenditore) {
 
         if (tessera.getAbbonamento() == null) {
-            Abbonamento nuovoAbbonamento = new Abbonamento(LocalDate.now(), epicode, tipo, tessera);
+            Abbonamento nuovoAbbonamento = new Abbonamento(LocalDate.now(), rivenditore, tipo, tessera);
             tessera.setAbbonamento(nuovoAbbonamento);
 
             ticketDAO.saveTicket(nuovoAbbonamento);
@@ -100,7 +97,7 @@ public class AcquistoTessera {
             utenteDAO.updateTessera(tessera);
         }
 
-        opzioni.OpzioniUtente(tessera.getUtente());
+        opzioni.OpzioniUtente(tessera.getUtente(), rivenditore);
     }
 }
 

@@ -21,6 +21,7 @@ import java.util.List;
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "tipo_rivenditore")
 @Table(name = "rivenditori")
+@NamedQuery(name = "Rivenditore.getAll", query = "SELECT r FROM RivenditoreAutorizzato r")
 public abstract class Rivenditore {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)

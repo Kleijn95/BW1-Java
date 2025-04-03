@@ -2,6 +2,7 @@ package it.epicode.mezzi;
 
 import jakarta.persistence.EntityManager;
 
+import java.time.LocalDate;
 import java.util.List;
 
 public class MezzoDAO {
@@ -51,5 +52,29 @@ public class MezzoDAO {
 
     public Manutenzione getManutenzioneById(Long id) {
         return em.find(Manutenzione.class, id);
+    }
+
+    public List<Rifornimento> getRifornimentiPerMezzo(Mezzo mezzo) {
+        return em.createNamedQuery("Rifornimento.getRifornimentiPerMezzo", Rifornimento.class)
+                .setParameter("mezzo", mezzo)
+                .getResultList();
+    }
+
+    public double getCostoTotaleRifornimentoPerMezzo(Mezzo mezzo) {
+        return em.createNamedQuery("Rifornimento.getCostoTotaleRifornimentoPerMezzo", double.class)
+                .setParameter("mezzo", mezzo)
+                .getSingleResult();
+    }
+
+    public double getMediaMensileRifornimentiPerMezzo(Mezzo mezzo, LocalDate dataMese) {
+        int mese = dataMese.getMonthValue();
+        int anno = dataMese.getYear();
+
+        Double media = em.createNamedQuery("Rifornimento.getMediaMensileRifornimentiPerMezzo", Double.class)
+                .setParameter("mezzo", mezzo)
+                .setParameter("mese", mese)
+                .setParameter("anno", anno)
+                .getSingleResult();
+        return media != null ? media : 0.0;
     }
 }

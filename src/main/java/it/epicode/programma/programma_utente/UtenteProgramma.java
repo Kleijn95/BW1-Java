@@ -1,5 +1,6 @@
 package it.epicode.programma.programma_utente;
 
+import it.epicode.rivenditori.Rivenditore;
 import it.epicode.utente.Utente;
 import it.epicode.utente.UtenteDAO;
 import jakarta.persistence.EntityManager;
@@ -9,7 +10,7 @@ import jakarta.persistence.Persistence;
 import java.util.Scanner;
 
 public class UtenteProgramma {
-    public void UtenteProgramma() {
+    public void UtenteProgramma(Rivenditore rivenditore) {
         Scanner scanner = new Scanner(System.in);
 
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("buildweek");
@@ -37,6 +38,6 @@ public class UtenteProgramma {
             System.out.println("Utente creato con successo.");
             System.out.println("Benvenuto " + utente.getNome() + " " + utente.getCognome());
         }
-        opzioni.OpzioniUtente(utente);
+        opzioni.OpzioniUtente(utente, rivenditore);
     }
 }

@@ -10,6 +10,9 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
 
+import java.time.LocalDate;
+import java.time.format.TextStyle;
+import java.util.Locale;
 import java.util.Scanner;
 
 public class GestioneParcoMezzi {
@@ -54,6 +57,7 @@ public class GestioneParcoMezzi {
             System.out.println("2. Controllo biglietti");
             System.out.println("3. Lista tratte");
             System.out.println("4. Controllo tratte");
+            System.out.println("5. Storico rifornimenti");
 
             System.out.println("N. Torna indietro");
             String scelta = scanner.next().toLowerCase();
@@ -68,7 +72,7 @@ public class GestioneParcoMezzi {
                     break;
                 case "3":
                     for (Tratta tratta : mezzo.getTratte()) {
-                        System.out.println("Partenza: " + tratta.getPartenza() + " - Capolinea: " + tratta.getCapolinea());
+                        System.out.println("Partenza: " + tratta.getPartenza() + " - Capolinea: " + tratta.getCapolinea() + " - Data: " + tratta.getDataTratta() + " - Distanza" + tratta.getDistanza() + "Km");
                     }
                     break;
                 case "4": {
@@ -83,6 +87,23 @@ public class GestioneParcoMezzi {
                         System.out.println("Nessuna media disponibile.");
                     }
                     break;
+                }
+                case "5": {
+                    mezzoDAO.getRifornimentiPerMezzo(mezzo).forEach(rifornimento -> {
+                        System.out.println("Data: " + rifornimento.getDataRifornimento() + " - Tipo: " + rifornimento.getTipoCarburante() + " - Quantità: " + rifornimento.getQuantita() + " litri - Costo: " + rifornimento.getCostoRifornimento() + "€");
+                    });
+                    System.out.println("- Costo totale rifornimenti: " + mezzoDAO.getCostoTotaleRifornimentoPerMezzo(mezzo) + "€");
+                    System.out.println("- Costo medio mensile degli ultimi 3 mesi:");
+                    for (int i = 0; i < 3; i++) {
+                        LocalDate dataMese = LocalDate.now().minusMonths(i);
+                        int mese = dataMese.getMonthValue();
+                        int anno = dataMese.getYear();
+
+                        Double media = mezzoDAO.getMediaMensileRifornimentiPerMezzo(mezzo, dataMese);
+
+                        System.out.println("- " + mese + "/" + anno + ": " + media + "€");
+                    }
+
                 }
                 case "n":
                     opzioniAmministratore.OpzioniAmministratore(amministratore);

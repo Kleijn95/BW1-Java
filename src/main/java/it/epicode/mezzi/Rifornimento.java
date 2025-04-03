@@ -11,6 +11,12 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @Entity
 @Table(name = "rifornimenti")
+@NamedQueries({
+        @NamedQuery(name = "Rifornimento.getCostoTotaleRifornimentoPerMezzo", query = "SELECT SUM(r.costoRifornimento) FROM Rifornimento r WHERE r.mezzo = :mezzo"),
+        @NamedQuery(name = "Rifornimento.getMediaMensileRifornimentiPerMezzo", query = "SELECT AVG(r.costoRifornimento) FROM Rifornimento r WHERE r.mezzo = :mezzo AND EXTRACT(MONTH FROM r.dataRifornimento) = :mese AND EXTRACT(YEAR FROM r.dataRifornimento) = :anno"),
+        @NamedQuery(name = "Rifornimento.getRifornimentiPerMezzo", query = "SELECT r FROM Rifornimento r WHERE r.mezzo = :mezzo")
+})
+
 public class Rifornimento {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
@@ -22,6 +28,7 @@ public class Rifornimento {
     @ManyToOne
     @JoinColumn(name = "mezzo_id", nullable = false)
     private Mezzo mezzo;
+    private double costoRifornimento;
 
 
     public Rifornimento(LocalDate dataRifornimento, double quantita, Mezzo mezzo) {
@@ -35,6 +42,7 @@ public class Rifornimento {
         this.dataRifornimento = dataRifornimento;
         this.tipoCarburante = mezzo.getConsumo().getTipoCarburante();
         this.quantita = Math.round(quantita * 100.0) / 100.0;
+        this.costoRifornimento = Math.round((quantita * mezzo.getConsumo().getCosto()) * 100.0) / 100.0;
 
         this.mezzo = mezzo;
     }

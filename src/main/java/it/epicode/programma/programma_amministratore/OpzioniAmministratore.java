@@ -1,5 +1,6 @@
 package it.epicode.programma.programma_amministratore;
 
+import it.epicode.rivenditori.Rivenditore;
 import it.epicode.utente.Utente;
 import it.epicode.programma.AvvioProgramma;
 import it.epicode.programma.programma_amministratore.programma_gestione_mezzi.GestioneParcoMezzi;

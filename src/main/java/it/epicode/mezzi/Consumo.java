@@ -15,8 +15,6 @@ public class Consumo  {
     private TipoCarburante  tipoCarburante;
     private double costo;
 
-
-
     public Consumo() {
     }
 
@@ -28,8 +26,6 @@ public class Consumo  {
         }
         return costo;
     }
-
-
 
     public Consumo(double litriPerKm, TipoCarburante tipoCarburante) {
         if (litriPerKm < 0) {
