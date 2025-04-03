@@ -72,6 +72,9 @@ public class MainCreate {
         Mezzo tram = new Mezzo("Tram 1", TipoMezzo.TRAM, 100, null, StatoMezzo.IN_SERVIZIO);
         Mezzo bus = new Mezzo("Autobus 1", TipoMezzo.AUTOBUS, 50, null, StatoMezzo.IN_SERVIZIO);
 
+
+
+
         em.persist(tram);
         em.persist(bus);
 
@@ -95,13 +98,13 @@ public class MainCreate {
         bus.setManutenzioni(new ArrayList<>(List.of(manutenzione1, manutenzione3, manutenzione5)));
 
         // TRATTE
-        Tratta tratta1 = new Tratta(null, "Piazza Centrale", "Stazione", 15, tram);
-        Tratta tratta2 = new Tratta(null, "Aereoporto", "Centrale", 30, tram);
-        Tratta tratta3 = new Tratta(null, "Aereoporto", "Centrale", 25, tram);
+        Tratta tratta1 = new Tratta(null, "Piazza Centrale", "Stazione", 15, tram, 20, LocalDate.of(2023, 1, 1));
+        Tratta tratta2 = new Tratta(null, "Aereoporto", "Centrale", 30, tram, 25, LocalDate.of(2023, 4, 5));
+        Tratta tratta3 = new Tratta(null, "Aereoporto", "Centrale", 25, tram,25, LocalDate.of(2023, 4, 5));
 
-        Tratta tratta4 = new Tratta(null, "Piazza del Popolo", "Piazzale Ostiense", 20, bus);
-        Tratta tratta5 = new Tratta(null, "Termini", "Piazza Venezia", 25, bus);
-        Tratta tratta6 = new Tratta(null, "Stazione Tiburtina", "Piazza Bologna", 30, bus);
+        Tratta tratta4 = new Tratta(null, "Piazza del Popolo", "Piazzale Ostiense", 20, bus,50, LocalDate.of(2024, 5, 6));
+        Tratta tratta5 = new Tratta(null, "Termini", "Piazza Venezia", 25, bus,10, LocalDate.of(2024, 5, 6));
+        Tratta tratta6 = new Tratta(null, "Stazione Tiburtina", "Piazza Bologna", 30, bus,15, LocalDate.of(2024, 7, 4));
 
         em.persist(tratta1);
         em.persist(tratta2);
@@ -117,6 +120,9 @@ public class MainCreate {
         em.merge(bus);
 
         em.getTransaction().commit();
+        em.close();
+        emf.close();
+
     }
 }
 

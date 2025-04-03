@@ -38,8 +38,15 @@ public class Mezzo {
     @OneToOne
     private Manutenzione manutenzioneInCorso;
 
+    @Embedded
+    private Consumo consumo;
+
+
+
     @Column(name = "prossima_manutenzione")
     private LocalDate prossimaManutenzione;
+
+
 
     public Mezzo(String nome, TipoMezzo tipoMezzo, int capienza, List<Tratta> tratte, StatoMezzo statoMezzo) {
         this.nome = nome;
@@ -47,6 +54,7 @@ public class Mezzo {
         this.capienza = capienza;
         this.tratte = tratte;
         this.statoMezzo = statoMezzo;
+        this.consumoTipoMezzo();
     }
 
     public void iniziaManutenzione(boolean olio, boolean freni, boolean gomme, boolean revisione, Mezzo mezzo) {
@@ -60,4 +68,17 @@ public class Mezzo {
         this.manutenzioneInCorso.setDataFineManutenzione(LocalDate.now());
         this.setProssimaManutenzione(LocalDate.now().plusDays(30));
     }
+
+    public void consumoTipoMezzo() {
+
+        if (this.tipoMezzo == TipoMezzo.AUTOBUS) {
+            this.consumo = new Consumo(0.4, TipoCarburante.BENZINA);
+        } else if (this.tipoMezzo == TipoMezzo.TRAM) {
+            this.consumo = new Consumo(0.6, TipoCarburante.DIESEL);
+
+
+        }
+
+    }
+
 }
