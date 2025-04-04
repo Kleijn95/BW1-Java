@@ -47,7 +47,7 @@ public class GestioneTratte {
                 break;
                 case "3": trattaDAO.getTratteConMaggioriRitardi().forEach(tratta -> {
                     System.out.println("Data: " + tratta.getDataTratta() + " - Partenza: " + tratta.getPartenza() + " - Capolinea: " + tratta.getCapolinea());
-                    System.out.println("Tempo previsto: " + tratta.getTempoPercorrenzaPrevista() + " minuti - Tempo effettivo: " + tratta.getTempoPercorrenza() + " minuti - Ritardo: " + (tratta.getTempoPercorrenza() - tratta.getTempoPercorrenzaPrevista()) + " minuti");
+                    System.out.println("Tempo previsto: " + tratta.getTempoPercorrenzaPrevista() + " minuti - Tempo effettivo: " + tratta.getTempoPercorrenza() + " minuti - Ritardo: " + (Math.round((tratta.getTempoPercorrenza() - tratta.getTempoPercorrenzaPrevista()) * 100.00)/100) + " minuti");
                     System.out.println("---------------------");
                 });
                 break;

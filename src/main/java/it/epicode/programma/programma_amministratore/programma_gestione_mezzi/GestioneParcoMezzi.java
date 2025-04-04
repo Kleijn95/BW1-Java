@@ -39,6 +39,7 @@ public class GestioneParcoMezzi {
         while (true) {
             System.out.println("Scegli ID Mezzo:");
             long idMezzo = scanner.nextLong();
+            scanner.nextLine();
 
             if (mezzoDAO.getMezzoById(idMezzo) != null) {
                 mezzo = mezzoDAO.getMezzoById(idMezzo);
@@ -72,7 +73,7 @@ public class GestioneParcoMezzi {
                     break;
                 case "3":
                     for (Tratta tratta : mezzo.getTratte()) {
-                        System.out.println("Partenza: " + tratta.getPartenza() + " - Capolinea: " + tratta.getCapolinea() + " - Data: " + tratta.getDataTratta() + " - Distanza" + tratta.getDistanza() + "Km");
+                        System.out.println("Partenza: " + tratta.getPartenza() + " - Capolinea: " + tratta.getCapolinea() + " - Data: " + tratta.getDataTratta() + " - Distanza: " + tratta.getDistanza() + " Km");
                     }
                     break;
                 case "4": {

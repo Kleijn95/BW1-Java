@@ -45,10 +45,6 @@ public class Mezzo {
     @Column(name = "prossima_manutenzione")
     private LocalDate prossimaManutenzione;
 
-
-
-
-
     public Mezzo(String nome, TipoMezzo tipoMezzo, int capienza, List<Tratta> tratte, StatoMezzo statoMezzo) {
         this.nome = nome;
         this.tipoMezzo = tipoMezzo;

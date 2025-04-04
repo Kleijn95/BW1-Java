@@ -51,24 +51,27 @@ public class GestioneAutisti {
                     }
                     break;
                 case "2":
-                    Long idAutista2 = null;
-                    while (idAutista2 == null) {
+                    Autista autista2 = null;
+
+                    while (autista2 == null) {
                         System.out.println("Digita l'ID dell'autista:");
+
                         if (scanner.hasNextLong()) {
-                            idAutista2 = scanner.nextLong();
-                            scanner.nextLine();
+                            Long idAutista2 = scanner.nextLong();
+                            scanner.nextLine(); // pulizia buffer
+
+                            autista2 = autistaDAO.getAutistaById(idAutista2);
+
+                            if (autista2 == null) {
+                                System.out.println("ID non trovato.");
+                            }
                         } else {
                             System.out.println("Devi inserire un numero valido per l'ID.");
-                                    scanner.nextLine();
+                            scanner.nextLine(); // pulizia buffer
                         }
                     }
-                    Autista autista2 = autistaDAO.getAutistaById(idAutista2);
-                    if (autista2 != null) {
-                    autista2.getTratteEffettuate().forEach(tratta ->
-                            System.out.println("Data: " + tratta.getDataTratta() + " - Partenza: " + tratta.getPartenza() + " - Capolinea: " + tratta.getCapolinea()));
-                    } else {
-                    System.out.println("ID  non trovato.");
-                    }
+                    System.out.println("Tratte effettuate:");autista2.getTratteEffettuate().forEach(tratta ->
+                        System.out.println("Data: " + tratta.getDataTratta() + " - Partenza: " + tratta.getPartenza() + " - Capolinea: " + tratta.getCapolinea()));
                 break;
                 case "n": new OpzioniAmministratore();
                 break;

@@ -57,24 +57,24 @@ public class Manutenzione {
         if (operazione) {
             return costo;
         } else
-           return 0.0;
+           return 0.00;
     }
 
     public Manutenzione(boolean cambioOlio, boolean freni, boolean gomme, boolean revisione, Mezzo mezzo, LocalDate dataInizioManutenzione, LocalDate dataFineManutenzione) {
         this.cambioOlio = cambioOlio;
-        this.prezzoCambioOlio = costoManutenzione(cambioOlio, 50.0);
+        this.prezzoCambioOlio = costoManutenzione(cambioOlio, 50.00);
         this.freni = freni;
-        this.prezzoFreni = costoManutenzione(freni, 70.0);
+        this.prezzoFreni = costoManutenzione(freni, 70.00);
         this.mezzo = mezzo;
         if(this.getMezzo().getTipoMezzo() != TipoMezzo.TRAM) {
             this.gomme = false;
             this.prezzoGomme = 0.0;
         } else {
             this.gomme = gomme;
-            this.prezzoGomme = costoManutenzione(gomme, 100.0);
+            this.prezzoGomme = costoManutenzione(gomme, 100.00);
         }
         this.revisione = revisione;
-        this.prezzoRevisione = costoManutenzione(revisione, 80.0);
+        this.prezzoRevisione = costoManutenzione(revisione, 80.00);
         this.costoTotale = costoTotale();
 
         this.dataInizioManutenzione = dataInizioManutenzione;

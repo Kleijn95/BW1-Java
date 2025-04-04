@@ -60,9 +60,9 @@ public class Tratta {
             this.tempoPercorrenzaPrevista = (int) Math.ceil((distanza / 16.0) * 60);
         }
 
-        this.tempoPercorrenza = Math.round((tempoPercorrenzaPrevista * variabileTempo) * 100.0) / 100.0;
-        this.consumoLitriPerTratta = Math.round(calcolaConsumoLitriTratta() * 100.0) / 100.0;
-        this.costoTratta = Math.round(calcolaCostoTratta() * 100.0) / 100.0;
+        this.tempoPercorrenza = Math.round((tempoPercorrenzaPrevista * variabileTempo) * 100.00) / 100.00;
+        this.consumoLitriPerTratta = Math.round(calcolaConsumoLitriTratta() * 100.00) / 100.00;
+        this.costoTratta = Math.round(calcolaCostoTratta() * 100.00) / 100.00;
         this.dataTratta = dataTratta;
         this.faiRifornimento();
     }

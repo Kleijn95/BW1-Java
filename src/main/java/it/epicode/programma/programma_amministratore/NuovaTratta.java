@@ -4,6 +4,8 @@ import it.epicode.mezzi.Mezzo;
 import it.epicode.mezzi.MezzoDAO;
 import it.epicode.mezzi.Tratta;
 import it.epicode.mezzi.TrattaDAO;
+import it.epicode.utente.Autista;
+import it.epicode.utente.AutistaDAO;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
@@ -19,6 +21,7 @@ public class NuovaTratta {
         EntityManager em = emf.createEntityManager();
         MezzoDAO mezzoDAO = new MezzoDAO(em);
         TrattaDAO trattaDAO = new TrattaDAO(em);
+        AutistaDAO autistaDAO = new AutistaDAO(em);
 
         System.out.println("Mezzi disponibili:");
         mezzoDAO.getAllMezzi().forEach(mezzo ->
@@ -73,8 +76,33 @@ public class NuovaTratta {
                 scanner.nextLine();
             }
         }
+        System.out.println("Lista autisti:");
+        autistaDAO.getAllAutisti().forEach(autista -> System.out.println("ID: " + autista.getId() +  " - " + autista.getNome() + " " + autista.getCognome()));
 
-        Tratta nuovaTratta = new Tratta(partenza, capolinea, 1, mezzo, distanza, LocalDate.now(), null);
+
+        System.out.println("Scegli autista: ");
+
+        Autista autista = null;
+        while (autista == null) {
+            System.out.println("Digita l'ID dell'autista:");
+
+            if (scanner.hasNextLong()) {
+                Long idAutista = scanner.nextLong();
+                scanner.nextLine(); // pulisce buffer
+
+                autista = autistaDAO.getAutistaById(idAutista);
+
+                if (autista == null) {
+                    System.out.println("ID non trovato.");
+                }
+
+            } else {
+                System.out.println("Devi inserire un numero valido per l'ID.");
+                scanner.nextLine();
+            }
+        }
+
+        Tratta nuovaTratta = new Tratta(partenza, capolinea, 1, mezzo, distanza, LocalDate.now(), autista);
         System.out.println("Tratta creata.");
         System.out.println("Mezzo: " + nuovaTratta.getMezzo().getNome());
         System.out.println("Data: " + nuovaTratta.getDataTratta());

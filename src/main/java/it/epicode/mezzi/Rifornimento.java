@@ -45,8 +45,8 @@ public class Rifornimento {
 
         this.dataRifornimento = dataRifornimento;
         this.tipoCarburante = mezzo.getConsumo().getTipoCarburante();
-        this.quantita = Math.round(quantita * 100.0) / 100.0;
-        this.costoRifornimento = Math.round((quantita * mezzo.getConsumo().getCosto()) * 100.0) / 100.0;
+        this.quantita = Math.round(quantita * 100.00) / 100.00;
+        this.costoRifornimento = Math.round((quantita * mezzo.getConsumo().getCosto()) * 100.00) / 100.00;
 
         this.mezzo = mezzo;
     }
