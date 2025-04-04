@@ -8,7 +8,7 @@ import java.util.List;
 
 @Data
 @Embeddable
-public class Consumo  {
+public class Consumo {
 
     private double litriPerKm;
     @Enumerated(EnumType.STRING)

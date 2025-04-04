@@ -124,7 +124,6 @@ public class MainCreate {
         em.getTransaction().commit();
         em.close();
         emf.close();
-
     }
 }
 

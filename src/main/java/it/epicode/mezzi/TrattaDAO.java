@@ -42,4 +42,9 @@ public class TrattaDAO {
                 .setParameter("mezzo", mezzo)
                 .getSingleResult();
     }
+
+    public List<Tratta> getTratteConMaggioriRitardi() {
+        return em.createNamedQuery("Tratta.getTratteConMaggioriRitardi", Tratta.class)
+                .getResultList();
+    }
 }

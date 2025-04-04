@@ -10,6 +10,7 @@ import java.time.LocalDate;
 @Data
 @NoArgsConstructor
 @Entity
+@NamedQuery(name="Tratta.getTratteConMaggioriRitardi", query = "SELECT t FROM Tratta t WHERE t.tempoPercorrenza > t.tempoPercorrenzaPrevista ORDER BY (t.tempoPercorrenza - t.tempoPercorrenzaPrevista) DESC")
 @NamedQuery(name="Tratta.getAll", query="SELECT t FROM Tratta t")
 @NamedQuery(name="Tratta.getNumeroTratteUguali", query= "SELECT count(t) from Tratta t where lower(t.partenza) = lower(:partenza) and lower(t.capolinea) = lower(:capolinea) and t.mezzo = :mezzo")
 @NamedQuery(name="Tratta.getTempoMedioTratta", query = "SELECT AVG(t.tempoPercorrenza) from Tratta t where lower(t.partenza) = lower(:partenza) and lower(t.capolinea) = lower(:capolinea) and t.mezzo = :mezzo")
@@ -35,12 +36,12 @@ public class Tratta {
     @Column(name = "data_tratta", nullable = false)
     private LocalDate dataTratta;
     @Column(name = "consumo_litri")
-   private double consumoLitriPerTratta;
+    private double consumoLitriPerTratta;
     @Column(name = "costo_tratta")
-   private double costoTratta;
+    private double costoTratta;
 
 
-    public Tratta(String partenza, String capolinea, double tempoPercorrenza, Mezzo mezzi,  int distanza, LocalDate  dataTratta) {
+    public Tratta(String partenza, String capolinea, double variabileTempo, Mezzo mezzi,  int distanza, LocalDate  dataTratta) {
         this.partenza = partenza;
         this.capolinea = capolinea;
         this.mezzo = mezzi;
@@ -50,8 +51,8 @@ public class Tratta {
         } else if (this.getMezzo().getTipoMezzo() == TipoMezzo.AUTOBUS) {
             this.tempoPercorrenzaPrevista = (int) Math.ceil((distanza / 16.0) * 60);
         }
-        this.tempoPercorrenza = tempoPercorrenzaPrevista * (tempoPercorrenza);
-        this.consumoLitriPerTratta = calcolaConsumoLitriTratta();
+        this.tempoPercorrenza = Math.round((tempoPercorrenzaPrevista * (variabileTempo)) * 100.0) / 100.0;
+        this.consumoLitriPerTratta = Math.round((calcolaConsumoLitriTratta() * 100.0) / 100.0);
         this.costoTratta = Math.round( calcolaCostoTratta() * 100.0) / 100.0;
         calcolaCostoTratta();
         this.dataTratta = dataTratta;

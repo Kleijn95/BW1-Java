@@ -2,6 +2,7 @@ package it.epicode.programma.programma_amministratore;
 
 import it.epicode.mezzi.MezzoDAO;
 import it.epicode.mezzi.TrattaDAO;
+import it.epicode.programma.programma_amministratore.programma_gestione_mezzi.GestioneTratte;
 import it.epicode.rivenditori.Rivenditore;
 import it.epicode.utente.Utente;
 import it.epicode.programma.AvvioProgramma;
@@ -10,6 +11,7 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
 
+import java.time.LocalDate;
 import java.util.Scanner;
 
 public class OpzioniAmministratore {
@@ -17,22 +19,20 @@ public class OpzioniAmministratore {
         Scanner scanner = new Scanner(System.in);
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("buildweek");
         EntityManager em = emf.createEntityManager();
-        TrattaDAO trattaDAO = new TrattaDAO(em);
 
 
         ContaBiglietti contaBiglietti = new ContaBiglietti();
         ContaAbbonamenti contaAbbonamenti = new ContaAbbonamenti();
         GestioneParcoMezzi gestioneParcoMezzi = new GestioneParcoMezzi();
         AvvioProgramma avvioProgramma = new AvvioProgramma();
-        NuovaTratta nuovaTratta = new NuovaTratta();
+        GestioneTratte gestioneTratte = new GestioneTratte();
 
         while (true) {
             System.out.println("Seleziona Operazione: ");
             System.out.println("1. Controllo Biglietti");
             System.out.println("2. Controllo Abbonamenti");
             System.out.println("3. Gestione Parco Mezzi");
-            System.out.println("4. Lista tratte");
-            System.out.println("5. Crea nuova tratta");
+            System.out.println("4. Gestione Tratte");
             System.out.println("N. Torna indietro");
             System.out.println("0. Chiudi il programma");
 
@@ -46,12 +46,7 @@ public class OpzioniAmministratore {
                 break;
                 case "3": gestioneParcoMezzi.GestioneParcoMezzi();
                 break;
-                case "4": trattaDAO.getAllTratte().forEach(tratta -> {
-                    System.out.println("- Partenza: " + tratta.getPartenza() + " - Capolinea: " + tratta.getCapolinea() + " - Mezzo: " + tratta.getMezzo().getNome() + " - Data: " + tratta.getDataTratta());;
-                });
-                OpzioniAmministratore(amministratore);
-                    break;
-                case "5": nuovaTratta.NuovaTratta();
+                case "4": gestioneTratte.GestioneTratte(amministratore);
                 break;
                 case "n": avvioProgramma.AvvioProgramma();
                 break;
