@@ -1,5 +1,6 @@
 package it.epicode.mezzi;
 
+import it.epicode.Autista;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -44,6 +45,8 @@ public class Mezzo {
 
     @Column(name = "prossima_manutenzione")
     private LocalDate prossimaManutenzione;
+
+
 
 
 

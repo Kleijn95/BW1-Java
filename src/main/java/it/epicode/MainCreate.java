@@ -99,14 +99,22 @@ public class MainCreate {
         tram.setManutenzioni(new ArrayList<>(List.of(manutenzione2, manutenzione4, manutenzione6)));
         bus.setManutenzioni(new ArrayList<>(List.of(manutenzione1, manutenzione3, manutenzione5)));
 
-        // TRATTE
-        Tratta tratta1 = new Tratta("Piazza Centrale", "Stazione", 1.2, tram, 20, LocalDate.of(2025, 1, 2));
-        Tratta tratta2 = new Tratta("Aereoporto", "Centrale", 1.0, tram, 25, LocalDate.of(2025, 3, 5));
-        Tratta tratta3 = new Tratta("Aereoporto", "Centrale", 0.8, tram,25, LocalDate.of(2025, 1, 5));
+        // AUTISTI
 
-        Tratta tratta4 = new Tratta("Piazza del Popolo", "Piazzale Ostiense", 1.3, bus,50, LocalDate.of(2025, 4, 1));
-        Tratta tratta5 = new Tratta("Termini", "Piazza Venezia", 1, bus,10, LocalDate.of(2025, 1, 6));
-        Tratta tratta6 = new Tratta("Stazione Tiburtina", "Piazza Bologna", 1.5, bus,15, LocalDate.of(2025, 2, 4));
+        Autista autista1 = new Autista("Gianni", "Bianchi", CategoriaPatente.D);
+        Autista autista2 = new Autista("Luca", "Neri", CategoriaPatente.B);
+        em.persist(autista1);
+        em.persist(autista2);
+
+        // TRATTE
+        Tratta tratta1 = new Tratta("Piazza Centrale", "Stazione", 1.2, tram, 20, LocalDate.of(2025, 1, 2),autista1
+        );
+        Tratta tratta2 = new Tratta("Aereoporto", "Centrale", 1.0, tram, 25, LocalDate.of(2025, 3, 5),autista2);
+        Tratta tratta3 = new Tratta("Aereoporto", "Centrale", 0.8, tram,25, LocalDate.of(2025, 1, 5),autista1);
+
+        Tratta tratta4 = new Tratta("Piazza del Popolo", "Piazzale Ostiense", 1.3, bus,50, LocalDate.of(2025, 4, 1),autista2);
+        Tratta tratta5 = new Tratta("Termini", "Piazza Venezia", 1, bus,10, LocalDate.of(2025, 1, 6),autista2);
+        Tratta tratta6 = new Tratta("Stazione Tiburtina", "Piazza Bologna", 1.5, bus,15, LocalDate.of(2025, 2, 4),autista2);
 
         em.persist(tratta1);
         em.persist(tratta2);

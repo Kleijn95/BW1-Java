@@ -1,5 +1,7 @@
 package it.epicode.programma.programma_amministratore.programma_gestione_mezzi;
 
+import it.epicode.Autista;
+import it.epicode.AutistaDAO;
 import it.epicode.mezzi.TrattaDAO;
 import it.epicode.programma.programma_amministratore.NuovaTratta;
 import it.epicode.programma.programma_amministratore.OpzioniAmministratore;
@@ -20,6 +22,7 @@ public class GestioneTratte {
         EntityManager em = emf.createEntityManager();
         TrattaDAO trattaDAO = new TrattaDAO(em);
         NuovaTratta nuovaTratta = new NuovaTratta();
+        AutistaDAO  autistaDAO = new AutistaDAO(em);
 
         OpzioniAmministratore opzioniAmministratore = new OpzioniAmministratore();
 
@@ -28,6 +31,7 @@ public class GestioneTratte {
             System.out.println("1. Lista tratte");
             System.out.println("2. Crea nuova tratta");
             System.out.println("3. Controlla ritardi tratte");
+            System.out.println("4. Informazioni Autista");
             System.out.println("N. Torna indietro");
             System.out.println("0. Chiudi il programma");
 
@@ -51,6 +55,24 @@ public class GestioneTratte {
                     System.out.println("---------------------");
                 });
                 break;
+                case "4": autistaDAO.getAllAutisti().forEach(autista -> System.out.println("Id: " + autista.getId() +  " " + autista.getNome() + " " + autista.getCognome()));
+                    System.out.println("Di quale autista vuoi sapere le tratte?");
+                    Long idAutista = scanner.nextLong();
+                    Autista autista = autistaDAO.getAutistaById(idAutista);
+                    autista.getTratteEffettuate().forEach(tratta -> System.out.println("Data: " + tratta.getDataTratta() + " - Partenza: " + tratta.getPartenza() + " - Capolinea: " + tratta.getCapolinea()));
+
+
+
+
+
+
+
+                break;
+
+
+
+
+
                 case "n": opzioniAmministratore.OpzioniAmministratore(amministratore);
                     break;
                 case "0":  System.out.println("Chiusura in corso...");

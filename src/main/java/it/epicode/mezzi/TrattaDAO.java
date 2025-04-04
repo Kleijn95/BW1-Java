@@ -1,5 +1,6 @@
 package it.epicode.mezzi;
 
+import it.epicode.Autista;
 import jakarta.persistence.EntityManager;
 
 import java.util.List;
@@ -45,6 +46,19 @@ public class TrattaDAO {
 
     public List<Tratta> getTratteConMaggioriRitardi() {
         return em.createNamedQuery("Tratta.getTratteConMaggioriRitardi", Tratta.class)
+                .getResultList();
+    }
+
+
+    public List<Tratta> getTratteByAutistaId(Long id){
+        return em.createNamedQuery("Tratta.getTratteByAutistaId", Tratta.class)
+                .setParameter("id", id)
+                .getResultList();
+    }
+
+    public List<Tratta> getTratteInRitardoByAutistaId(Long autistaId) {
+        return em.createNamedQuery("Tratta.getTratteByAutistaIdConRitardo", Tratta.class)
+                .setParameter("autistaId", autistaId)
                 .getResultList();
     }
 }

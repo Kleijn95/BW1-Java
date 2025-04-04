@@ -1,5 +1,6 @@
 package it.epicode.mezzi;
 
+import it.epicode.Autista;
 import jakarta.persistence.*;
 import jdk.jfr.Name;
 import lombok.Data;
@@ -14,6 +15,8 @@ import java.time.LocalDate;
 @NamedQuery(name="Tratta.getAll", query="SELECT t FROM Tratta t")
 @NamedQuery(name="Tratta.getNumeroTratteUguali", query= "SELECT count(t) from Tratta t where lower(t.partenza) = lower(:partenza) and lower(t.capolinea) = lower(:capolinea) and t.mezzo = :mezzo")
 @NamedQuery(name="Tratta.getTempoMedioTratta", query = "SELECT AVG(t.tempoPercorrenza) from Tratta t where lower(t.partenza) = lower(:partenza) and lower(t.capolinea) = lower(:capolinea) and t.mezzo = :mezzo")
+@NamedQuery(name="Tratta.getTratteByAutistaId", query = "SELECT t FROM Tratta t WHERE t.autista.id = :autistaId")
+@NamedQuery(name="Tratta.getTratteByAutistaIdConRitardo", query = "SELECT t FROM Tratta t WHERE t.autista.id = :autistaId AND t.tempoPercorrenza > t.tempoPercorrenzaPrevista")
 public class Tratta {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
@@ -40,24 +43,31 @@ public class Tratta {
     @Column(name = "costo_tratta")
     private double costoTratta;
 
+    @ManyToOne
+    @JoinColumn(name = "autista_id", nullable = false)
+    private Autista autista;
 
-    public Tratta(String partenza, String capolinea, double variabileTempo, Mezzo mezzi,  int distanza, LocalDate  dataTratta) {
+
+    public Tratta(String partenza, String capolinea, double variabileTempo, Mezzo mezzi, int distanza, LocalDate dataTratta, Autista autista) {
         this.partenza = partenza;
         this.capolinea = capolinea;
         this.mezzo = mezzi;
         this.distanza = distanza;
-        if (this.getMezzo().getTipoMezzo() == TipoMezzo.TRAM) {
+        this.autista = autista;
+
+        if (this.mezzo.getTipoMezzo() == TipoMezzo.TRAM) {
             this.tempoPercorrenzaPrevista = (int) Math.ceil((distanza / 22.0) * 60);
-        } else if (this.getMezzo().getTipoMezzo() == TipoMezzo.AUTOBUS) {
+        } else if (this.mezzo.getTipoMezzo() == TipoMezzo.AUTOBUS) {
             this.tempoPercorrenzaPrevista = (int) Math.ceil((distanza / 16.0) * 60);
         }
-        this.tempoPercorrenza = Math.round((tempoPercorrenzaPrevista * (variabileTempo)) * 100.0) / 100.0;
-        this.consumoLitriPerTratta = Math.round((calcolaConsumoLitriTratta() * 100.0) / 100.0);
-        this.costoTratta = Math.round( calcolaCostoTratta() * 100.0) / 100.0;
-        calcolaCostoTratta();
+
+        this.tempoPercorrenza = Math.round((tempoPercorrenzaPrevista * variabileTempo) * 100.0) / 100.0;
+        this.consumoLitriPerTratta = Math.round(calcolaConsumoLitriTratta() * 100.0) / 100.0;
+        this.costoTratta = Math.round(calcolaCostoTratta() * 100.0) / 100.0;
         this.dataTratta = dataTratta;
         this.faiRifornimento();
     }
+
 
     public double calcolaConsumoLitriTratta() {
 

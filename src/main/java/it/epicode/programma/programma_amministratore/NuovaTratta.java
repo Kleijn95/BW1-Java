@@ -74,7 +74,7 @@ public class NuovaTratta {
             }
         }
 
-        Tratta nuovaTratta = new Tratta(partenza, capolinea, 1, mezzo, distanza, LocalDate.now());
+        Tratta nuovaTratta = new Tratta(partenza, capolinea, 1, mezzo, distanza, LocalDate.now(), null);
         System.out.println("Tratta creata.");
         System.out.println("Mezzo: " + nuovaTratta.getMezzo().getNome());
         System.out.println("Data: " + nuovaTratta.getDataTratta());
