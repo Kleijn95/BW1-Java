@@ -21,6 +21,7 @@ public class MainCreate {
     public static void main(String[] args) {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("buildweek");
         EntityManager em = emf.createEntityManager();
+        AutistaDAO autistaDAO = new AutistaDAO(em);
 
         em.getTransaction().begin();
 
@@ -128,6 +129,9 @@ public class MainCreate {
 
         em.merge(tram);
         em.merge(bus);
+
+        List<Autista> autisti = autistaDAO.getAllAutisti();
+        autisti.forEach(autistaDAO::aggiungiNoteDisciplinariPerTratteInRitardo);
 
         em.getTransaction().commit();
         em.close();
