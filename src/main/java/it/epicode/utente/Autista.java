@@ -1,5 +1,6 @@
-package it.epicode;
+package it.epicode.utente;
 
+import it.epicode.CategoriaPatente;
 import it.epicode.mezzi.Mezzo;
 import it.epicode.mezzi.Tratta;
 import jakarta.persistence.*;
@@ -9,7 +10,6 @@ import lombok.NoArgsConstructor;
 
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 @Entity
@@ -29,7 +29,6 @@ public class Autista {
     @Enumerated(EnumType.STRING)
     private CategoriaPatente patente;
 
-    // Mezzi che può guidare
     @ManyToMany
     @JoinTable(
             name = "autista_mezzo",
@@ -38,11 +37,10 @@ public class Autista {
     )
     private List<Mezzo> mezziAbilitati = new ArrayList<>();
 
-    // Tratte percorse (storico)
+
     @OneToMany(mappedBy = "autista")
     private List<Tratta> tratteEffettuate = new ArrayList<>();
 
-    // Note disciplinari
     @ElementCollection
     private List<String> noteDisciplinari = new ArrayList<>();
 

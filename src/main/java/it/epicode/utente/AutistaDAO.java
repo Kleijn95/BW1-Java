@@ -1,10 +1,8 @@
-package it.epicode;
+package it.epicode.utente;
 
 import it.epicode.mezzi.Tratta;
 import it.epicode.mezzi.TrattaDAO;
 import jakarta.persistence.EntityManager;
-import jakarta.persistence.EntityManagerFactory;
-import jakarta.persistence.Persistence;
 
 import java.util.List;
 

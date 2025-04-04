@@ -1,6 +1,5 @@
 package it.epicode.mezzi;
 
-import it.epicode.Autista;
 import jakarta.persistence.EntityManager;
 
 import java.util.List;

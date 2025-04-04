@@ -3,12 +3,10 @@ package it.epicode;
 import it.epicode.biglietti.Abbonamento;
 import it.epicode.biglietti.Biglietto;
 import it.epicode.mezzi.*;
-import it.epicode.utente.Tessera;
+import it.epicode.utente.*;
 import it.epicode.biglietti.TipoAbbonamento;
 import it.epicode.rivenditori.DistributoreAutomatico;
 import it.epicode.rivenditori.RivenditoreAutorizzato;
-import it.epicode.utente.Amministratore;
-import it.epicode.utente.Utente;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
@@ -104,6 +102,8 @@ public class MainCreate {
 
         Autista autista1 = new Autista("Gianni", "Bianchi", CategoriaPatente.D);
         Autista autista2 = new Autista("Luca", "Neri", CategoriaPatente.B);
+        autista1.setMezziAbilitati(new ArrayList<>(List.of(tram, bus)));
+        autista2.setMezziAbilitati(new ArrayList<>(List.of(tram)));
         em.persist(autista1);
         em.persist(autista2);
 

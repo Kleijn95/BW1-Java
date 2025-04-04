@@ -1,6 +1,7 @@
 package it.epicode.programma.programma_utente;
 
 import it.epicode.rivenditori.Rivenditore;
+import it.epicode.rivenditori.RivenditoreDAO;
 import it.epicode.utente.Utente;
 import it.epicode.utente.UtenteDAO;
 import jakarta.persistence.EntityManager;
@@ -10,14 +11,24 @@ import jakarta.persistence.Persistence;
 import java.util.Scanner;
 
 public class UtenteProgramma {
-    public void UtenteProgramma(Rivenditore rivenditore) {
+    public void UtenteProgramma() {
         Scanner scanner = new Scanner(System.in);
 
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("buildweek");
         EntityManager em = emf.createEntityManager();
         UtenteDAO utenteDAO = new UtenteDAO(em);
+        RivenditoreDAO rivenditoreDAO = new RivenditoreDAO(em);
 
         OpzioniUtente opzioni = new OpzioniUtente();
+
+        System.out.println("Scegli ID del rivenditore:");
+        rivenditoreDAO.getAllRivenditori().forEach(rivenditoreAutorizzato -> {
+            System.out.println("ID: " + rivenditoreAutorizzato.getId() + " " + rivenditoreAutorizzato.getLocation());
+        });
+
+        Long sceltaRivenditore = scanner.nextLong();
+        scanner.nextLine();
+        Rivenditore rivenditore = rivenditoreDAO.getRivenditorebyId(sceltaRivenditore);
 
         System.out.println("Digita il tuo ID Utente:");
         long id = scanner.nextLong();

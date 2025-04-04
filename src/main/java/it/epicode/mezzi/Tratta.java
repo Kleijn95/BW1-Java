@@ -1,8 +1,7 @@
 package it.epicode.mezzi;
 
-import it.epicode.Autista;
+import it.epicode.utente.Autista;
 import jakarta.persistence.*;
-import jdk.jfr.Name;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 

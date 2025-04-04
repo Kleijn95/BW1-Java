@@ -1,9 +1,7 @@
 package it.epicode.programma.programma_amministratore;
 
-import it.epicode.mezzi.MezzoDAO;
-import it.epicode.mezzi.TrattaDAO;
-import it.epicode.programma.programma_amministratore.programma_gestione_mezzi.GestioneTratte;
-import it.epicode.rivenditori.Rivenditore;
+import it.epicode.utente.Autista;
+import it.epicode.utente.AutistaDAO;
 import it.epicode.utente.Utente;
 import it.epicode.programma.AvvioProgramma;
 import it.epicode.programma.programma_amministratore.programma_gestione_mezzi.GestioneParcoMezzi;
@@ -11,7 +9,6 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
 
-import java.time.LocalDate;
 import java.util.Scanner;
 
 public class OpzioniAmministratore {
@@ -26,6 +23,7 @@ public class OpzioniAmministratore {
         GestioneParcoMezzi gestioneParcoMezzi = new GestioneParcoMezzi();
         AvvioProgramma avvioProgramma = new AvvioProgramma();
         GestioneTratte gestioneTratte = new GestioneTratte();
+        GestioneAutisti gestioneAutisti = new GestioneAutisti();
 
         while (true) {
             System.out.println("Seleziona Operazione: ");
@@ -33,6 +31,7 @@ public class OpzioniAmministratore {
             System.out.println("2. Controllo Abbonamenti");
             System.out.println("3. Gestione Parco Mezzi");
             System.out.println("4. Gestione Tratte");
+            System.out.println("5. Informazione autisti");
             System.out.println("N. Torna indietro");
             System.out.println("0. Chiudi il programma");
 
@@ -47,6 +46,8 @@ public class OpzioniAmministratore {
                 case "3": gestioneParcoMezzi.GestioneParcoMezzi();
                 break;
                 case "4": gestioneTratte.GestioneTratte(amministratore);
+                break;
+                case "5": gestioneAutisti.GestioneAutisti(amministratore);
                 break;
                 case "n": avvioProgramma.AvvioProgramma();
                 break;
